@@ -1,0 +1,29 @@
+<div class="col s12 m4 l6">
+  <div class="turn">
+    <select name="example" id="select-turn">
+      <option value="b">黒のターン</option>
+      <option value="w">白のターン</option>
+    </select>
+  </div>
+  <%= stones %>
+<table id="board-table">
+  <% for y in 0...8 %>
+    <tr><% for x in 0...8 %>
+      <td onclick="put_stone(<%= y %>,<%= x %>)">
+        <div id="<%= y %><%= x %>" class="stone-<%= stones[y][x] %>"></div>
+      </td>
+    <% end %>
+  </tr>
+  <% end %>
+</table>
+</div>
+
+<script type="text/javascript">
+  var put_stone = function(y,x) {
+    var thisId = "#" + x + "" + y;
+
+    var color = $("#select-turn").val();
+    console.log(color);
+    $.ajax({url: '/games/edit', type: "POST", data:{y:y, x:x, color:color}});
+  }
+</script>
