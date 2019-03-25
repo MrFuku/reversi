@@ -1,4 +1,5 @@
 class Game < ApplicationRecord
+  belongs_to :room
 
   def init_bord
     self.stones = "........,........,........,...wb...,...bw...,........,........,........"
@@ -18,6 +19,8 @@ class Game < ApplicationRecord
     p directions
     if directions
       reverse_stone(y, x, directions, myColor)
+    else
+      false
     end
   end
 

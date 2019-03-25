@@ -1,0 +1,8 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+   <h1>新規ルーム作成フォーム</h1>
+   <%= form_for room, remote: true do |f| %>
+    <%= f.submit "作成" %>
+   <% end %>
+  </div>
+</div>

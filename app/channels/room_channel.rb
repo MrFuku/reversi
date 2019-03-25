@@ -1,6 +1,6 @@
 class RoomChannel < ApplicationCable::Channel
   def subscribed
-    some_channel = 1234
+    some_channel = "some_channel"
     stream_from some_channel
   end
 
@@ -9,8 +9,14 @@ class RoomChannel < ApplicationCable::Channel
   end
 
   def speak(data)
-    some_channel = data['room_id'] || "room_channel"
-    puts "aaaaaaaa #{some_channel}"
+    some_channel = "some_channel"
+    #some_channel = data['room_id'] || "room_channel"
     ActionCable.server.broadcast some_channel, data['message']
+  end
+
+  def othello(data)
+    some_channel = "some_channel"
+    #some_channel = data['room_id'] || "room_channel"
+    ActionCable.server.broadcast some_channel, data['template']
   end
 end

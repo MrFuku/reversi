@@ -1,3 +1,4 @@
+<p><%= "ルームid:#{@room.id} ゲームid:#{@game.id}" %></p>
 <div class="col s12 m4 l6">
   <div class="turn">
     <select name="example" id="select-turn">
@@ -19,11 +20,9 @@
 </div>
 
 <script type="text/javascript">
-  var put_stone = function(y,x) {
-    var thisId = "#" + x + "" + y;
-
+  var put_stone = function(y, x) {
+    var thisId = "#" + y + "" + x;
     var color = $("#select-turn").val();
-    console.log(color);
-    $.ajax({url: '/games/edit', type: "POST", data:{y:y, x:x, color:color}});
+    $.ajax({url: '/games/edit', type: "POST", data:{ y:y, x:x, color:color }});
   }
 </script>

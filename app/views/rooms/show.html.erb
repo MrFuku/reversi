@@ -1,13 +1,14 @@
 <h1>Rooms#show</h1>
-<p>Find me in app/views/rooms/show.html.erb</p>
 <div id="board">
   <%= render '/games/board', stones: @stones %>
 </div>
 <form class="form-inline">
   <div class="form-group">
-    <input type="hidden" class="form-control" id="room-id" value="<%= @room_id %>">
+    <input type="hidden" class="form-control" id="room-id" value="1234">
     <input type="text" class="form-control" id="chat-input">
   </div>
-  <button class="btn btn-primary" id="button">送信</button>
+  <button type="button" class="btn btn-primary" id="button">送信</button>
 </form>
 <div id="messages">
+
+</div>

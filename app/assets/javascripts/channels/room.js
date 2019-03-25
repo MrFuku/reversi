@@ -8,14 +8,21 @@ App.room = App.cable.subscriptions.create("RoomChannel", {
   },
 
   received: function(message) {
-    const messages = document.getElementById('messages')
-    message = '<p>' + message + '</p>'
-    messages.innerHTML = message + messages.innerHTML
+    //const messages = document.getElementById('messages')
+    //message = '<p>' + message + '</p>'
+    //console.log(message);
+    $("#board").html(message)
+    //messages.innerHTML = message + messages.innerHTML
   },
 
   speak: function(content, room_id) {
     console.log(content)
     //alert(room_id)
+    return this.perform('speak', {message: content, room_id: room_id});
+  },
+
+  othello: function(content, room_id) {
+    alert(content)
     return this.perform('speak', {message: content, room_id: room_id});
   }
 });

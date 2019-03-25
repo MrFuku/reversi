@@ -1,1 +1,3 @@
-$("#board").html("<%= escape_javascript(render '/games/board', stones: @stones) %>")
+<% template = escape_javascript(render '/games/board', stones: @stones) %>
+//$("#board").html("<%= template %>")
+App.room.speak("<%= template %>", 1)
