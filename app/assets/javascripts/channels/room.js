@@ -13,18 +13,20 @@ App.room = App.cable.subscriptions.create("RoomChannel", {
     messages.innerHTML = message + messages.innerHTML
   },
 
-  speak: function(content) {
+  speak: function(content, room_id) {
     console.log(content)
-    return this.perform('speak', {message: content});
+    //alert(room_id)
+    return this.perform('speak', {message: content, room_id: room_id});
   }
 });
 
 document.addEventListener('DOMContentLoaded', function(){
+  const room = document.getElementById('room-id')
   const input = document.getElementById('chat-input')
   const button = document.getElementById('button')
   button.addEventListener('click', function(){
     const content = input.value
-    App.room.speak(content)
+    App.room.speak(content, room.value)
     input.value = ''
   })
 })

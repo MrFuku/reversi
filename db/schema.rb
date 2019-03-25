@@ -10,7 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_24_052524) do
+ActiveRecord::Schema.define(version: 2019_03_24_092558) do
+
+  create_table "games", force: :cascade do |t|
+    t.text "stones"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "gemes", force: :cascade do |t|
+    t.text "stones"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
