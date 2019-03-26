@@ -1,18 +1,30 @@
 class GamesController < ApplicationController
   def edit
-    puts "・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・games#edit room_id is #{cookies[:room_id]}"
     @room = Room.find(cookies[:room_id])
+    @game = @room.game
     y = params[:y].to_i
     x = params[:x].to_i
-    myColor = params[:color]
-    @game = @room.game
-    @game.put_stone(y,x,myColor)
+    myColor = @room.color?
+    if @room.is_turn?(current_user) && @game.put_stone(y,x,myColor)
+      @room.change_turn
+      @message = @room.get_message
+      if @game.stuck?(@room.color?)
+        @message = @room.color? + "がパスしました。"
+        @room.change_turn
+        if @game.stuck?(@room.color?)
+          @message = "ゲーム終了。"
+          if @game.count_black == @game.count_white
+            @message += "引き分けです。"
+          else
+            @message += @game.count_black > @game.count_white ? "黒":"白"
+            @message += "の勝ちです。"
+          end
+        end
+      end
+    end
     @stones = @game.get_stones
     respond_to do |format|
-      params[:user_id] = "test"
-      puts "・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・コントローラー user_id is #{params[:user_id]}"
       format.js
-
     end
   end
 end
