@@ -1,4 +1,7 @@
 <p><%= "ルームid:#{@room.id} ゲームid:#{@game.id}" %></p>
+<p><%= "黒の個数:#{@game.count_black} 白の個数:#{@game.count_white}" %></p>
+<p><%= "now_turn: #{@room.turn_user}" %></p>
+<p><%= @message %></p>
 <div class="col s12 m4 l6">
   <div class="turn">
     <select name="example" id="select-turn">

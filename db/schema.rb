@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_26_022336) do
+ActiveRecord::Schema.define(version: 2019_03_26_070159) do
 
   create_table "games", force: :cascade do |t|
     t.text "stones"
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 2019_03_26_022336) do
     t.datetime "updated_at", null: false
     t.integer "owner_id"
     t.integer "guest_id"
+    t.integer "turn_user"
     t.index ["game_id"], name: "index_rooms_on_game_id"
     t.index ["guest_id"], name: "index_rooms_on_guest_id"
     t.index ["owner_id"], name: "index_rooms_on_owner_id"

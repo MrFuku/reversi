@@ -24,6 +24,23 @@ class Game < ApplicationRecord
     end
   end
 
+  def stuck?(myColor)
+    for i in 0...8
+      for j in 0...8
+        return false if put_it?(i, j, myColor)
+      end
+    end
+    true
+  end
+
+  def count_black
+    self.stones.count("b")
+  end
+
+  def count_white
+    self.stones.count("w")
+  end
+
   private
 
   def reverse_stone?(y, x, myColor)

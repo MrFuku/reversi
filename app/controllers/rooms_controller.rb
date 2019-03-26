@@ -8,10 +8,14 @@ class RoomsController < ApplicationController
   end
 
   def show
+
     @room = Room.find(cookies[:room_id])
+    @room.turn_user=0
+    @room.save
     @game = @room.game
     @game.init_bord
     @stones = @game.get_stones
+    @message = @room.get_message
   end
 
   def create
