@@ -8,8 +8,6 @@ class RoomsController < ApplicationController
   end
 
   def show
-    cookies[:room_id] = params[:id]
-    puts "・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・rooms#show room_id is #{cookies[:room_id]}"
     @room = Room.find(cookies[:room_id])
     @game = @room.game
     @game.init_bord

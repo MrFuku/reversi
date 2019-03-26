@@ -1,7 +1,12 @@
 class RoomChannel < ApplicationCable::Channel
   def subscribed
     some_channel = "some_channel"
-    stream_from some_channel
+    if user = current_user
+      channel = user.get_room || some_channel
+      stream_from channel
+    else
+      stream_from some_channel
+    end
   end
 
   def unsubscribed
@@ -10,13 +15,11 @@ class RoomChannel < ApplicationCable::Channel
 
   def speak(data)
     some_channel = "some_channel"
-    #some_channel = data['room_id'] || "room_channel"
-    ActionCable.server.broadcast some_channel, data['message']
-  end
-
-  def othello(data)
-    some_channel = "some_channel"
-    #some_channel = data['room_id'] || "room_channel"
-    ActionCable.server.broadcast some_channel, data['template']
+    if user = current_user
+      channel = user.get_room || some_channel
+      ActionCable.server.broadcast channel, data['message']
+    else
+      ActionCable.server.broadcast some_channel, data['message']
+    end
   end
 end
