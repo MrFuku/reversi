@@ -1,10 +1,35 @@
 <h1>StaticPages#index</h1>
 <p>Find me in app/views/static_pages/index.html.erb</p>
 
-<%= link_to "ルーム作成", rooms_new_path, remote: true, class: "btn btn-lg btn-primary" %>
+<%= link_to "ルーム作成", rooms_new_path, remote: true, class: "need-login btn btn-lg btn-primary" %>
+<p class="fukidashi">ログインが必要です</p>
 <div class="rooms">
   <p>ルーム数　<%= @rooms.count %></p>
   <p>ゲーム数 <%= @games.count %></p>
   <%= render @rooms %>
 </div>
 <div id="new-room" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div class="css-fukidashi">
+  <p class="text">ここをマウスオーバーすると・・・</p>
+  <p class="fukidashi">吹き出しが表示されます</p>
+</div>
+
+<script type="text/javascript">
+  $('.need-login').click(function(){
+    return false;
+  });
+
+  $(function () {
+
+
+  // マウス座標を吹き出しにセット
+  $('.need-login').mousemove(function(e){
+    // 吹き出しに合わせ微調整
+    console.log(e.clientY, e.clientX)
+    $('.fukidashi').css({
+      'top': e.clientY - 70,
+      'left': e.clientX - 20
+    });
+  });
+});
+</script>

@@ -1,4 +1,4 @@
-App.room = App.cable.subscriptions.create("RoomChannel", {
+App.room = App.cable.subscriptions.create( {channel: "RoomChannel"}, {
   connected: function() {
     // Called when the subscription is ready for use on the server
   },
@@ -16,7 +16,7 @@ App.room = App.cable.subscriptions.create("RoomChannel", {
   },
 
   speak: function(content, room_id) {
-    console.log(content)
+    //console.log(content)
     //alert(room_id)
     return this.perform('speak', {message: content, room_id: room_id});
   },

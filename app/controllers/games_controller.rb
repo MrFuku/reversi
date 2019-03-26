@@ -9,7 +9,10 @@ class GamesController < ApplicationController
     @game.put_stone(y,x,myColor)
     @stones = @game.get_stones
     respond_to do |format|
+      params[:user_id] = "test"
+      puts "・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・・コントローラー user_id is #{params[:user_id]}"
       format.js
+
     end
   end
 end

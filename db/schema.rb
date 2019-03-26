@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_25_083218) do
+ActiveRecord::Schema.define(version: 2019_03_26_022336) do
 
   create_table "games", force: :cascade do |t|
     t.text "stones"
@@ -30,7 +30,11 @@ ActiveRecord::Schema.define(version: 2019_03_25_083218) do
     t.integer "game_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "owner_id"
+    t.integer "guest_id"
     t.index ["game_id"], name: "index_rooms_on_game_id"
+    t.index ["guest_id"], name: "index_rooms_on_guest_id"
+    t.index ["owner_id"], name: "index_rooms_on_owner_id"
   end
 
   create_table "users", force: :cascade do |t|
