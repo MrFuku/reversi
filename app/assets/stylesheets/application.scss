@@ -24,3 +24,35 @@ table{
   width: 45px; height: 45px;
   border-radius: 50%;
 }
+
+.fukidashi {
+  display: none;
+  width: 200px;
+  position: absolute;
+  top: 120px;
+  left: 140px;
+  padding: 16px;
+  border-radius: 5px;
+  background: #33cc99;
+  color: #fff;
+  font-weight: bold;
+}
+
+.fukidashi:after {
+      position: absolute;
+      width: 0;
+      height: 0;
+      left: 0;
+      bottom: -19px;
+      margin-left: 10px;
+      border: solid transparent;
+      border-color: rgba(51, 204, 153, 0);
+      border-top-color: #33cc99;
+      border-width: 10px;
+      pointer-events: none;
+      content: " ";
+    }
+
+a:hover + .fukidashi {
+  display: block;
+}
