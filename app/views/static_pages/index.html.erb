@@ -8,7 +8,7 @@
   <p>ゲーム数 <%= @games.count %></p>
   <%= render @rooms %>
 </div>
-<div id="new-room" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="modal-frame" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 
 <% unless user_signed_in? %>
   <script type="text/javascript">

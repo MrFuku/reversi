@@ -1,3 +1,3 @@
 <div class="room">
-  <p><%= link_to "ルーム id:#{room.id}", "/rooms/show/#{room.id}" %><%= link_to "delete", "/rooms/#{room.id}", method: :delete, data: {confirm: "本当に削除しますか？"} %></p>
+  <p><%= link_to "ルーム id:#{room.id}", "join/#{room.id}", remote: true %><%= link_to "delete", "/rooms/#{room.id}", method: :delete, data: {confirm: "本当に削除しますか？"} %></p>
 </div>

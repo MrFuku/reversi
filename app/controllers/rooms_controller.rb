@@ -23,13 +23,27 @@ class RoomsController < ApplicationController
   end
 
   def create
-    @room = current_user.build_own_room
+    @room = current_user.build_own_room(room_params)
     @game = @room.build_game
     @game.init_bord
-    @game.save
-    @room.save
     respond_to do |format|
       format.js
+    end
+  end
+
+  def edit
+    @room = Room.find(params[:id])
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def update
+    room = Room.find(params[:id])
+    if room.has_password? && !room.authenticate(params[:room][:password])
+      redirect_to root_path
+    else
+      redirect_to room
     end
   end
 
@@ -42,7 +56,11 @@ class RoomsController < ApplicationController
   private
 
   def room_params
-    params.require(:room).permit()
+    if params[:add_password]
+      params.require(:room).permit(:password, :password_confirmation)
+    else
+      params.require(:room).permit()
+    end
   end
 
   def be_not_belong

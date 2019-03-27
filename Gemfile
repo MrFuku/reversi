@@ -14,6 +14,7 @@ gem 'pry-rails'
 gem 'bootstrap', '~> 4.2.1'
 gem 'devise'
 gem 'jquery-rails'
+gem 'bcrypt', '3.1.12'
 
 group :development, :test do
   gem 'sqlite3', '~> 1.3.6'
