@@ -1,7 +1,7 @@
 class Room < ApplicationRecord
   has_one :game
   belongs_to :owner, class_name: 'User', :foreign_key => 'owner_id'
-  belongs_to :guest, class_name: 'User', :foreign_key => 'guest_id'
+  belongs_to :guest, class_name: 'User', :foreign_key => 'guest_id', optional: true
 
   def is_turn?(user)
     now_user = self.turn_user == 0 ? owner : guest
@@ -20,5 +20,9 @@ class Room < ApplicationRecord
   def get_message
     message = self.turn_user == 0 ? "黒" : "白"
     message += "のターンです。"
+  end
+
+  def belongs_to?(user)
+    self.owner == user || self.guest == user
   end
 end

@@ -1,7 +1,7 @@
 class GamesController < ApplicationController
   def edit
-    @room = Room.find(cookies[:room_id])
-    @game = @room.game
+    @game = Game.find(params[:id])
+    @room = @game.room
     y = params[:y].to_i
     x = params[:x].to_i
     myColor = @room.color?

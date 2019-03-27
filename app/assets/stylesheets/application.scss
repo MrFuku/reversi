@@ -39,20 +39,16 @@ table{
 }
 
 .fukidashi:after {
-      position: absolute;
-      width: 0;
-      height: 0;
-      left: 0;
-      bottom: -19px;
-      margin-left: 10px;
-      border: solid transparent;
-      border-color: rgba(51, 204, 153, 0);
-      border-top-color: #33cc99;
-      border-width: 10px;
-      pointer-events: none;
-      content: " ";
-    }
-
-a:hover + .fukidashi {
-  display: block;
+  position: absolute;
+  width: 0;
+  height: 0;
+  left: 0;
+  bottom: -19px;
+  margin-left: 10px;
+  border: solid transparent;
+  border-color: rgba(51, 204, 153, 0);
+  border-top-color: #33cc99;
+  border-width: 10px;
+  pointer-events: none;
+  content: " ";
 }

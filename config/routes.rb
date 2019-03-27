@@ -4,6 +4,6 @@ Rails.application.routes.draw do
   get 'rooms/new'
   post 'rooms', to: "rooms#create"
   delete 'rooms/:id', to: "rooms#destroy"
-  post 'games/edit'
+  post 'games/edit/:id', to: 'games#edit'
   root to: 'static_pages#index'
 end

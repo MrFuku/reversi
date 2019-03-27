@@ -16,7 +16,6 @@ class Game < ApplicationRecord
 
   def put_stone(y, x, myColor)
     directions = put_it?(y, x, myColor)
-    p directions
     if directions
       reverse_stone(y, x, directions, myColor)
     else

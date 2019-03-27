@@ -9,27 +9,29 @@
   <%= render @rooms %>
 </div>
 <div id="new-room" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
-<div class="css-fukidashi">
-  <p class="text">ここをマウスオーバーすると・・・</p>
-  <p class="fukidashi">吹き出しが表示されます</p>
-</div>
 
-<script type="text/javascript">
-  $('.need-login').click(function(){
-    return false;
-  });
-
-  $(function () {
-
-
-  // マウス座標を吹き出しにセット
-  $('.need-login').mousemove(function(e){
-    // 吹き出しに合わせ微調整
-    console.log(e.clientY, e.clientX)
-    $('.fukidashi').css({
-      'top': e.clientY - 70,
-      'left': e.clientX - 20
+<% unless user_signed_in? %>
+  <script type="text/javascript">
+    $(function(){
+      $('.need-login')
+        // クリックを無効化
+        .click(function(){
+          return false;
+        })
+        // カーソルの位置に吹き出しを表示
+        .mousemove(function(e){
+          $('.fukidashi').css({
+            'display': 'block',
+            'top': e.clientY - 70,
+            'left': e.clientX - 20
+          });
+        })
+        // 吹き出しを非表示に
+        .mouseout(function(){
+          $('.fukidashi').css({
+            'display': 'none',
+          });
+        });
     });
-  });
-});
-</script>
+  </script>
+<% end %>

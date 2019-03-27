@@ -1,4 +1,6 @@
 class RoomsController < ApplicationController
+  before_action :authenticate_user!
+  before_action :be_not_belong, only: [:create]
 
   def new
     @room = Room.new
@@ -8,8 +10,10 @@ class RoomsController < ApplicationController
   end
 
   def show
-
-    @room = Room.find(cookies[:room_id])
+    @room = Room.find(params[:id])
+    unless @room.belongs_to?(current_user)
+      allow_room
+    end
     @room.turn_user=0
     @room.save
     @game = @room.game
@@ -19,11 +23,11 @@ class RoomsController < ApplicationController
   end
 
   def create
-    @room = Room.new
+    @room = current_user.build_own_room
     @game = @room.build_game
-    @room.save
-    @game.init
+    @game.init_bord
     @game.save
+    @room.save
     respond_to do |format|
       format.js
     end
@@ -39,5 +43,21 @@ class RoomsController < ApplicationController
 
   def room_params
     params.require(:room).permit()
+  end
+
+  def be_not_belong
+    unless current_user.get_room == nil
+      redirect_to root_path
+    end
+  end
+
+  def allow_room
+    user = current_user
+    if @room.guest == nil && user.get_room == nil
+      user.guest_room = @room
+      user.save
+    else
+      redirect_to root_path
+    end
   end
 end
