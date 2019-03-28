@@ -3,13 +3,16 @@ class ChatsController < ApplicationController
 
   def create
     room = current_user.own_room || current_user.guest_room
-    chat = room.chats.create(chat_params)
+    @chat = room.chats.create(chat_params)
+    respond_to do |format|
+      format.js
+    end
   end
 
   private
 
   def chat_params
     params[:user_id] = current_user.id
-    params.permit(:content)
+    params.permit(:content, :user_id)
   end
 end

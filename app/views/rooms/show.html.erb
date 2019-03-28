@@ -11,9 +11,11 @@
         <button type="button" class="btn btn-primary" id="send-chat">送信</button>
       </div>
     </form>
-    <% @chats.each do |chat| %>
-      <p><%= chat.content %></p>
-    <% end %>
+    <div id="chat-contents">
+      <% @chats.each do |chat| %>
+        <p><%= chat.content %></p>
+      <% end %>
+    </div>
   </div>
 </div>
 
