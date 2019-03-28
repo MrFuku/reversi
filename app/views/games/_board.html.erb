@@ -2,22 +2,19 @@
 <p><%= "黒の個数:#{@game.count_black} 白の個数:#{@game.count_white}" %></p>
 <p><%= "now_turn: #{@room.turn_user}" %></p>
 <p><%= @message %></p>
-<div class="col s12 m4 l6">
-  <div id="game-end">
-
-  </div>
-  <%= stones %>
-  <table id="board-table">
-    <% for y in 0...8 %>
-      <tr><% for x in 0...8 %>
-        <td onclick="put_stone(<%= y %>,<%= x %>)">
-          <div id="<%= y %><%= x %>" class="stone-<%= stones[y][x] %>"></div>
-        </td>
-      <% end %>
-    </tr>
-    <% end %>
-  </table>
+<div id="game-end">
 </div>
+<%= stones %>
+<table id="board-table">
+  <% for y in 0...8 %>
+    <tr><% for x in 0...8 %>
+      <td onclick="put_stone(<%= y %>,<%= x %>)">
+        <div id="<%= y %><%= x %>" class="stone-<%= stones[y][x] %>"></div>
+      </td>
+    <% end %>
+  </tr>
+  <% end %>
+</table>
 
 <script type="text/javascript">
   var put_stone = function(y, x) {
@@ -26,8 +23,6 @@
     $.ajax({url: '/games/edit/<%= @game.id %>', type: "POST", data:{ y:y, x:x, color:color }});
   }
   <% if @game.end? %>
-    //$("#game-end").html("<%= link_to "hoge", "#" %>")
-    template = '<%= link_to "ゲーム終了", "/rooms/#{@room.id}", method: :delete %>'
     $("#game-end").html('<%= link_to "ゲーム終了", "/rooms/#{@room.id}", method: :delete %>')
   <% end %>
 </script>

@@ -7,5 +7,6 @@ Rails.application.routes.draw do
   post 'games/edit/:id', to: 'games#edit'
   get 'join/:id', to: 'rooms#edit'
   post 'join/:id', to: 'rooms#update'
+  post 'chats/create'
   root to: 'static_pages#index'
 end

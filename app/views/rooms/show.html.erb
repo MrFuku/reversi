@@ -1,15 +1,30 @@
 <h1>Rooms#show</h1>
 <p><%= "ルームオーナーID:#{@room.owner&.id}  ルームゲストID:#{@room.guest&.id}  ログイン中のユーザーID:#{current_user&.id}" %></p>
-<div id="board">
-  <%= render '/games/board', stones: @stones %>
-</div>
-<form class="form-inline">
-  <div class="form-group">
-    <input type="hidden" class="form-control" id="room-id" value="1234">
-    <input type="text" class="form-control" id="chat-input">
+<div class="row">
+  <div id="board" class="col-sm-8">
+    <%= render '/games/board', stones: @stones %>
   </div>
-  <button type="button" class="btn btn-primary" id="button">送信</button>
-</form>
-<div id="messages">
-
+  <div id="chats" class="col-sm-4">
+    <form class="form-inline">
+      <div class="form-group">
+        <input type="text" class="form-control" id="chat-input">
+        <button type="button" class="btn btn-primary" id="send-chat">送信</button>
+      </div>
+    </form>
+    <div id="chat-contents">
+      <% @chats.each do |chat| %>
+        <p><%= chat.content %></p>
+      <% end %>
+    </div>
+  </div>
 </div>
+
+<script type="text/javascript">
+  $('#send-chat').click(function() {
+    const inputValue = $('#chat-input').val()
+    if(inputValue == "") return false
+    console.log(inputValue)
+    $('#chat-input').val("")
+    $.ajax({url: '/chats/create', type: "POST", data:{ content: inputValue }});
+  });
+</script>

@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_27_063142) do
+ActiveRecord::Schema.define(version: 2019_03_28_050611) do
+
+  create_table "chats", force: :cascade do |t|
+    t.integer "room_id"
+    t.integer "user_id"
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["room_id", "created_at"], name: "index_chats_on_room_id_and_created_at"
+    t.index ["room_id"], name: "index_chats_on_room_id"
+  end
 
   create_table "games", force: :cascade do |t|
     t.text "stones"
