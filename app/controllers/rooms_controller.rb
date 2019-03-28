@@ -21,6 +21,7 @@ class RoomsController < ApplicationController
     @stones = @game.get_stones
     @game.set_message("turn_black")
     @message = @game.get_message
+    @chats = @room.chats
   end
 
   def create
