@@ -3,6 +3,9 @@
 <p><%= "now_turn: #{@room.turn_user}" %></p>
 <p><%= @message %></p>
 <div class="col s12 m4 l6">
+  <div id="game-end">
+
+  </div>
   <%= stones %>
   <table id="board-table">
     <% for y in 0...8 %>
@@ -22,4 +25,9 @@
     var color = $("#select-turn").val();
     $.ajax({url: '/games/edit/<%= @game.id %>', type: "POST", data:{ y:y, x:x, color:color }});
   }
+  <% if @game.end? %>
+    //$("#game-end").html("<%= link_to "hoge", "#" %>")
+    template = '<%= link_to "ゲーム終了", "/rooms/#{@room.id}", method: :delete %>'
+    $("#game-end").html('<%= link_to "ゲーム終了", "/rooms/#{@room.id}", method: :delete %>')
+  <% end %>
 </script>

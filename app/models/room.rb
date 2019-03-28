@@ -10,18 +10,11 @@ class Room < ApplicationRecord
     now_user == user
   end
 
-  def color?
-    self.turn_user == 0 ? "b" : "w"
-  end
-
-  def change_turn
-    self.turn_user ^= 1
-    save
-  end
-
-  def get_message
-    message = self.turn_user == 0 ? "黒" : "白"
-    message += "のターンです。"
+  def color?(user)
+    stone = "none"
+    stone = "b" if user == owner
+    stone = "w" if user == guest
+    stone
   end
 
   def belongs_to?(user)
