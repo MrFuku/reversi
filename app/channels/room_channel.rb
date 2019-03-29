@@ -14,6 +14,6 @@ class RoomChannel < ApplicationCable::Channel
     some_channel = "room_channel"
     room_id = current_user&.get_room
     some_channel += "_#{room_id}" if room_id
-    ActionCable.server.broadcast some_channel, data['message']
+    ActionCable.server.broadcast some_channel, data['template']
   end
 end

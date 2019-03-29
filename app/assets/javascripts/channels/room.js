@@ -7,20 +7,11 @@ App.room = App.cable.subscriptions.create( {channel: "RoomChannel"}, {
     // Called when the subscription has been terminated by the server
   },
 
-  received: function(message) {
-    $("#board").html(message)
+  received: function(template) {
+    $("#board").html(template)
   },
 
-  speak: function(content, room_id) {
-    return this.perform('speak', {message: content, room_id: room_id});
+  speak: function(template) {
+    return this.perform('speak', {template: template});
   }
 });
-
-document.addEventListener('DOMContentLoaded', function(){
-  const room = document.getElementById('room-id')
-  const button = document.getElementById('button')
-  button.addEventListener('click', function(){
-    App.room.speak(content, room.value)
-    input.value = ''
-  })
-})

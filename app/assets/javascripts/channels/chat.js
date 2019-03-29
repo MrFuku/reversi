@@ -7,13 +7,12 @@ App.chat = App.cable.subscriptions.create("ChatChannel", {
     // Called when the subscription has been terminated by the server
   },
 
-  received: function(message) {
-    const messages = document.getElementById('chat-contents')
-    messages.innerHTML += '<p>' + message + '</p>'
+  received: function(template) {
+    addChat(template);
     // Called when there's incoming data on the websocket for this channel
   },
 
-  post: function(message) {
-    return this.perform('post', {message: message});
+  post: function(template) {
+    return this.perform('post', {template: template});
   }
 });
