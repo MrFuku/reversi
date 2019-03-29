@@ -4,6 +4,7 @@ class ChatsController < ApplicationController
   def create
     room = current_user.own_room || current_user.guest_room
     @chat = room.chats.create(chat_params)
+    @template = "<div class=#{current_user.id}><p>#{@chat.content}</p></div>"
     respond_to do |format|
       format.js
     end

@@ -1,1 +1,2 @@
-App.chat.post("<%= @chat.content %>")
+const template = "<div class=<%= current_user.id %>><p><%= @chat.content %></p></div>"
+App.chat.post(template)

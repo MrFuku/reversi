@@ -1,5 +1,9 @@
 @import "bootstrap";
 
+nav a {
+  color: white;
+  padding-right: 8px;
+}
 
 td{
   width: 60px; height: 60px;
@@ -51,4 +55,36 @@ table{
   border-width: 10px;
   pointer-events: none;
   content: " ";
+}
+
+#chat-contents {
+  padding: 20px 10px;
+  max-width: 450px;
+  text-align: left;
+  font-size: 14px;
+  background: #7da4cd;
+  margin-top: 10px;
+  height: 460px;
+  overflow: auto;
+  border: 2px solid;
+
+  p {
+    overflow: hidden;
+    width: 100%;
+    text-align: left;
+    display: inline-block;
+    position: relative;
+    //margin-top: 10px;
+    padding: 10px;
+    max-width: 250px;
+    border-radius: 12px;
+    background: #f9f9f9;
+  }
+
+  .mine {
+    text-align: right;
+    p {
+      background-color: #73ec89;
+    }
+  }
 }
