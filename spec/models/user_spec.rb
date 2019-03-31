@@ -4,8 +4,7 @@ RSpec.describe User, type: :model do
   before do
     @user = User.new(email:"test@test.com", password:"password")
   end
-
-
+  
   it "メールアドレス、パスワードがあれば有効な状態であること" do
     expect(@user).to be_valid
   end
@@ -28,7 +27,7 @@ RSpec.describe User, type: :model do
     expect(@user.errors[:password]).to include("can't be blank")
   end
 
-  it "ルーム対して、オーナーとゲストの一方でしか関連付けができないこと" do
+  it "ルーム対して、オーナーとゲストの両方で関連付けされていると無効な状態であること" do
     @user.build_own_room
     @user.build_guest_room(owner_id: 2)
     @user.valid?
@@ -41,5 +40,9 @@ RSpec.describe User, type: :model do
     own_room.destroy
     guest_room = @user.build_guest_room(owner_id: 2)
     expect(@user.get_room).to eq(guest_room.id)
+  end
+
+  it "関連付けられているルームがない時はnilを返すこと" do
+    expect(@user.get_room).to eq(nil)
   end
 end

@@ -13,6 +13,8 @@ class User < ApplicationRecord
     end
   end
 
+  private
+  
   def only_one_room
     if own_room && guest_room
       errors.add(:room, "Too many associations")

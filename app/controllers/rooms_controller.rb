@@ -17,7 +17,7 @@ class RoomsController < ApplicationController
     @room.turn_user=0
     @room.save
     @game = @room.game
-    @game.init_bord
+    @game.init_board
     @stones = @game.get_stones
     @game.set_message("turn_black")
     @message = @game.get_message
@@ -25,9 +25,10 @@ class RoomsController < ApplicationController
   end
 
   def create
-    @room = current_user.build_own_room(room_params)
+    @room = current_user.create_own_room(room_params)
     @game = @room.build_game
-    @game.init_bord
+    binding.pry
+    @game.init_board
     respond_to do |format|
       format.js
     end

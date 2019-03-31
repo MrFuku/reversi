@@ -3,7 +3,7 @@
   <% for y in 0...8 %>
     <tr><% for x in 0...8 %>
       <td onclick="put_stone(<%= y %>,<%= x %>)">
-        <div id="<%= y %><%= x %>" class="stone-<%= stones[y][x] %>"></div>
+        <div id="<%= y %><%= x %>" class="stone-<%= stones[y][x] %>" ></div>
       </td>
     <% end %>
   </tr>
