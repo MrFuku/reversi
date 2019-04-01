@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users
+  resources :users, only: [:index, :show]
+  resources :friends, only: [:index]
+  resources :friend_requests, only: [:create, :destroy]
   get 'rooms/show/:id', to: 'rooms#show', as: :room
   get 'rooms/new'
   post 'rooms', to: "rooms#create"

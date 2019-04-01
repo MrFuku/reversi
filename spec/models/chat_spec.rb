@@ -13,12 +13,12 @@ RSpec.describe Chat, type: :model do
   it "ルームとの関連付けがなければ無効な状態であること" do
     @chat.room = nil
     @chat.valid?
-    expect(@chat.errors[:room]).to include("must exist")
+    expect(@chat.errors[:room]).to include("を入力してください")
   end
 
   it "コンテンツがなければ無効な状態であること" do
     @chat.content = nil
     @chat.valid?
-    expect(@chat.errors[:content]).to include("can't be blank")
+    expect(@chat.errors[:content]).to include("を入力してください")
   end
 end

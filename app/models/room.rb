@@ -26,7 +26,7 @@ class Room < ApplicationRecord
 
   def exist_guest
     if self.guest_id && User.find_by(id: self.guest_id) == nil
-      errors.add(:guest, "when guest_id is present, the user must exist")
+      errors.add(:guest, "は存在しないユーザーです")
     end
   end
 end

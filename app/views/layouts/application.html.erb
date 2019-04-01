@@ -11,13 +11,10 @@
 
   <body>
     <%= render 'layouts/header' %>
-    <% if notice!=nil %>
-      <p class="alert alert-success"><%= notice %></p>
-    <% end %>
-    <% if alert!=nil %>
-      <p class="alert alert-danger"><%= alert %></p>
-    <% end %>
     <div class="container">
+      <div class="flash_messages">
+        <%= render 'layouts/flash_messages' %>
+      </div>
       <%= yield %>
     </div>
   </body>

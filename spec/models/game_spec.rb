@@ -26,7 +26,7 @@ RSpec.describe Game, type: :model do
   it "ルームと関連付けられてなければ無効な状態であること" do
     @game.room_id = nil
     @game.valid?
-    expect(@game.errors[:room_id]).to include("can't be blank")
+    expect(@game.errors[:room_id]).to include("を入力してください")
   end
 
   it "オセロの盤面を初期化できること" do

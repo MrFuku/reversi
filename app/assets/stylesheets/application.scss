@@ -1,9 +1,32 @@
 @import "bootstrap";
 
+/* 全体 */
+
+.flash {
+  position: relative;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  &_alert{
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+  }
+  &_notice {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+  }
+}
+
+/* ナビゲーションバー */
 nav a {
   color: white;
   padding-right: 8px;
 }
+
+/* ゲームテーブル */
 
 td{
   width: 60px; height: 60px;
@@ -28,6 +51,8 @@ table{
   width: 45px; height: 45px;
   border-radius: 50%;
 }
+
+/*  */
 
 .fukidashi {
   display: none;
@@ -56,6 +81,8 @@ table{
   pointer-events: none;
   content: " ";
 }
+
+/* チャット */
 
 #chat-contents {
   padding: 20px 10px;

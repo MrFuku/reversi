@@ -5,6 +5,10 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   has_one :own_room, class_name: 'Room', :foreign_key => 'owner_id', dependent: :destroy
   has_one :guest_room, class_name: 'Room', :foreign_key => 'guest_id', dependent: :destroy
+  has_many :sent_requests, class_name: "FriendRequest", foreign_key: "from_user_id", dependent: :destroy
+  has_many :received_requests, class_name: "FriendRequest", foreign_key: "to_user_id", dependent: :destroy
+  has_many :sent_users, through: :sent_requests, source: :to_user
+  has_many :received_users, through: :received_requests, source: :from_user
   validate :only_one_room
 
   def get_room
@@ -13,8 +17,24 @@ class User < ApplicationRecord
     end
   end
 
+  def sent_request(user)
+    sent_users << user
+  end
+
+  def cancel_request(user)
+    sent_requests.find_by(to_user_id: user.id).destroy
+  end
+
+  def sent_request?(user)
+    sent_users.include?(user)
+  end
+
+  def received_request?(user)
+    received_users.include?(user)
+  end
+
   private
-  
+
   def only_one_room
     if own_room && guest_room
       errors.add(:room, "Too many associations")

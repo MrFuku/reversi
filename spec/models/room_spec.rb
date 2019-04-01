@@ -13,21 +13,19 @@ RSpec.describe Room, type: :model do
   it "オーナーユーザーがいなければ無効な状態であること" do
     @room.owner_id = nil
     @room.valid?
-    expect(@room.errors[:owner]).to include("must exist")
+    expect(@room.errors[:owner]).to include("を入力してください")
   end
 
   it "オーナーユーザーが存在しないユーザーであれば無効な状態であること" do
-    expect(User.find_by(id: 100)).to eq(nil)
-    @room.owner_id = 100
+    @room.owner_id = -1
     @room.valid?
-    expect(@room.errors[:owner]).to include("must exist")
+    expect(@room.errors[:owner]).to include("を入力してください")
   end
 
   it "ゲストユーザーが存在しないユーザーであれば無効な状態であること" do
-    expect(User.find_by(id: 100)).to eq(nil)
-    @room.guest_id = 100
+    @room.guest_id = -1
     @room.valid?
-    expect(@room.errors[:guest]).to include("when guest_id is present, the user must exist")
+    expect(@room.errors[:guest]).to include("は存在しないユーザーです")
   end
 
   it "関連づけられているユーザーを判別できること" do
