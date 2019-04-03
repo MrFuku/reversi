@@ -9,6 +9,8 @@ class User < ApplicationRecord
   has_many :received_requests, class_name: "FriendRequest", foreign_key: "to_user_id", dependent: :destroy
   has_many :sent_users, through: :sent_requests, source: :to_user
   has_many :received_users, through: :received_requests, source: :from_user
+  has_many :friendships, class_name: "Friendship", foreign_key: "user_id", dependent: :destroy
+  has_many :friends, through: :friendships, source: :friend
   validate :only_one_room
 
   def get_room
@@ -31,6 +33,24 @@ class User < ApplicationRecord
 
   def received_request?(user)
     received_users.include?(user)
+  end
+
+  def add_friend(user)
+    Friendship.transaction do
+      self.friends << user
+      user.friends << self
+    end
+  end
+
+  def friend?(user)
+    friends.include?(user)
+  end
+
+  def remove_friend(user)
+    Friendship.transaction do
+      self.friends.delete(user)
+      user.friends.delete(self)
+    end
   end
 
   private

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_01_025312) do
+ActiveRecord::Schema.define(version: 2019_04_02_020227) do
 
   create_table "chats", force: :cascade do |t|
     t.integer "room_id"
@@ -32,6 +32,16 @@ ActiveRecord::Schema.define(version: 2019_04_01_025312) do
     t.index ["to_user_id"], name: "index_friend_requests_on_to_user_id"
   end
 
+  create_table "friendships", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "friend_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["friend_id"], name: "index_friendships_on_friend_id"
+    t.index ["user_id", "friend_id"], name: "index_friendships_on_user_id_and_friend_id", unique: true
+    t.index ["user_id"], name: "index_friendships_on_user_id"
+  end
+
   create_table "games", force: :cascade do |t|
     t.text "stones"
     t.datetime "created_at", null: false
@@ -48,6 +58,7 @@ ActiveRecord::Schema.define(version: 2019_04_01_025312) do
     t.integer "guest_id"
     t.integer "turn_user"
     t.string "password_digest"
+    t.boolean "only_friends", default: false, null: false
     t.index ["game_id"], name: "index_rooms_on_game_id"
     t.index ["guest_id"], name: "index_rooms_on_guest_id"
     t.index ["owner_id"], name: "index_rooms_on_owner_id"

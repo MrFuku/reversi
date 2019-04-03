@@ -74,4 +74,33 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe "友達登録関連メソッド" do
+    before do
+      @taro = create(:user)
+      @jiro = create(:user)
+    end
+
+    it "友達登録ができること" do
+      expect{
+        @taro.add_friend(@jiro)
+      }.to change(Friendship, :count).by(2)
+    end
+
+    it "友達登録していることを確認できること" do
+      expect(@taro.friend?(@jiro)).to eq(false)
+      expect(@jiro.friend?(@taro)).to eq(false)
+      @taro.add_friend(@jiro)
+      expect(@taro.friend?(@jiro)).to eq(true)
+      expect(@jiro.friend?(@taro)).to eq(true)
+    end
+
+    it "友達登録を解除できること" do
+      @taro.add_friend(@jiro)
+      expect(@taro.friend?(@jiro)).to eq(true)
+      expect(@jiro.friend?(@taro)).to eq(true)
+      @taro.remove_friend(@jiro)
+      expect(@taro.friend?(@jiro)).to eq(false)
+      expect(@jiro.friend?(@taro)).to eq(false)
+    end
+  end
 end

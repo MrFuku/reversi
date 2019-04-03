@@ -3,7 +3,7 @@
    <h1>参加用フォーム</h1>
    <div class="col-md-6 col-md-offset-3">
 
-     <%= form_with url: "/join/#{room.id}", method: "post" do %>
+     <%= form_with url: "/rooms/#{room.id}", method: "patch" do %>
        <% if room.has_password? %>
          <%= label :password, "パスワード" %>
          <%= password_field :room, :password %>

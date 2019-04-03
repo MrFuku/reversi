@@ -2,7 +2,7 @@
   <div id="" class="col-sm-4">
     <h2>友達一覧</h2>
     <ul class="friends">
-      <% @friends.each do |friend| %>
+      <% current_user.friends.each do |friend| %>
         <%= render "friend", user: friend %>
       <% end %>
 

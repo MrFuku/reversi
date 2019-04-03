@@ -21,6 +21,17 @@ class FriendRequestsController < ApplicationController
     redirect_to friends_path
   end
 
+  def update
+    user = User.find_by(id: params[:id])
+    if user == nil || !user.sent_request?(current_user)
+      flash[:alert] = "友達申請はすでに存在していません。"
+    else
+      user.cancel_request(current_user)
+      flash[:warning] = "友達申請を拒否しました。"
+    end
+    redirect_to friends_path
+  end
+
   def destroy
     user = User.find_by(id: params[:id])
     if user == nil

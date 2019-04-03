@@ -76,6 +76,60 @@ RSpec.describe "FriendRequests", type: :request do
     end
   end
 
+  describe "PATCH #update" do
+    before do
+      @user1 = create(:user)
+      @user2 = create(:user)
+      FriendRequest.create(from_user_id: @user2.id, to_user_id: @user1.id)
+    end
+
+    context "未ログイン時" do
+      it "ログイン画面にリダイレクトされること" do
+        patch friend_request_path @user2
+        assert_redirected_to new_user_session_path
+        expect(flash[:alert]).to eq("ログインまたは登録が必要です。")
+        expect(response).to have_http_status(:redirect)
+      end
+    end
+
+    context "ログイン時" do
+      before{ sign_in @user1 }
+      context "受け取った友達申請を拒否する時" do
+        it "申請が削除されること" do
+          expect{
+            patch friend_request_path @user2
+          }.to change(FriendRequest, :count).by(-1)
+          expect(flash[:warning]).to eq("友達申請を拒否しました。")
+          expect(response).to have_http_status(:redirect)
+          assert_redirected_to friends_path
+        end
+      end
+
+      context "ユーザーが存在していない時" do
+        it "申請が削除されない（申請が存在していないこと）" do
+          expect{
+            patch friend_request_path -1
+          }.to change(FriendRequest, :count).by(0)
+          expect(flash[:alert]).to eq("友達申請はすでに存在していません。")
+          expect(response).to have_http_status(:redirect)
+          assert_redirected_to friends_path
+        end
+      end
+
+      context "友達申請が存在していない時" do
+        it "申請が削除されない（申請が存在していないこと）" do
+          @user2.cancel_request(@user1)
+          expect{
+            patch friend_request_path @user2
+          }.to change(FriendRequest, :count).by(0)
+          expect(flash[:alert]).to eq("友達申請はすでに存在していません。")
+          expect(response).to have_http_status(:redirect)
+          assert_redirected_to friends_path
+        end
+      end
+    end
+  end
+
   describe "DELETE #destroy" do
     before do
       @user1 = create(:user)
