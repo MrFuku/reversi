@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_28_050611) do
+ActiveRecord::Schema.define(version: 2019_04_02_020227) do
 
   create_table "chats", force: :cascade do |t|
     t.integer "room_id"
@@ -20,6 +20,26 @@ ActiveRecord::Schema.define(version: 2019_03_28_050611) do
     t.datetime "updated_at", null: false
     t.index ["room_id", "created_at"], name: "index_chats_on_room_id_and_created_at"
     t.index ["room_id"], name: "index_chats_on_room_id"
+  end
+
+  create_table "friend_requests", force: :cascade do |t|
+    t.integer "from_user_id"
+    t.integer "to_user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["from_user_id", "to_user_id"], name: "index_friend_requests_on_from_user_id_and_to_user_id", unique: true
+    t.index ["from_user_id"], name: "index_friend_requests_on_from_user_id"
+    t.index ["to_user_id"], name: "index_friend_requests_on_to_user_id"
+  end
+
+  create_table "friendships", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "friend_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["friend_id"], name: "index_friendships_on_friend_id"
+    t.index ["user_id", "friend_id"], name: "index_friendships_on_user_id_and_friend_id", unique: true
+    t.index ["user_id"], name: "index_friendships_on_user_id"
   end
 
   create_table "games", force: :cascade do |t|
@@ -38,6 +58,7 @@ ActiveRecord::Schema.define(version: 2019_03_28_050611) do
     t.integer "guest_id"
     t.integer "turn_user"
     t.string "password_digest"
+    t.boolean "only_friends", default: false, null: false
     t.index ["game_id"], name: "index_rooms_on_game_id"
     t.index ["guest_id"], name: "index_rooms_on_guest_id"
     t.index ["owner_id"], name: "index_rooms_on_owner_id"

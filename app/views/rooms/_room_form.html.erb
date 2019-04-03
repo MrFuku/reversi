@@ -3,7 +3,8 @@
    <h1>新規ルーム作成フォーム</h1>
    <div class="col-md-6 col-md-offset-3">
      <%= form_for room, remote: true do |f| %>
-      <p><input type="checkbox" id="add_password" name="add_password" value="1"><label for="add_password">チェックボックス１</label></p>
+      <p><input type="checkbox" id="only_friends" name="only_friends" value="1"><label for="only_friends">友達限定にする</label></p>
+      <p><input type="checkbox" id="add_password" name="add_password" value="1"><label for="add_password">パスワードを設定する</label></p>
 
       <div id="password-box" style="display:none">
         <%= f.label :password, "パスワード" %>
@@ -28,8 +29,14 @@
     if($('#add_password').prop("checked")) {
       pass1 = $('#room_password').val()
       pass2 = $('#room_password_confirmation').val()
-      if(pass1 == "") return false
-      if(pass1 != pass2) return false
+      if(pass1 == ""){
+        alert("パスワードを入力してください。")
+        return false
+      }
+      if(pass1 != pass2){
+        alert("パスワードが一致しません。")
+        return false
+      }
     }
   });
 </script>

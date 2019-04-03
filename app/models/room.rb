@@ -5,11 +5,7 @@ class Room < ApplicationRecord
   belongs_to :guest, class_name: 'User', :foreign_key => 'guest_id', optional: true
   has_secure_password validations: false
   validates :password, presence: false, confirmation: true
-
-  def is_turn?(user)
-    now_user = self.turn_user == 0 ? owner : guest
-    now_user == user
-  end
+  validate :exist_guest
 
   def color?(user)
     stone = "none"
@@ -24,5 +20,13 @@ class Room < ApplicationRecord
 
   def has_password?
     self.password_digest != nil
+  end
+
+  private
+
+  def exist_guest
+    if self.guest_id && User.find_by(id: self.guest_id) == nil
+      errors.add(:guest, "は存在しないユーザーです")
+    end
   end
 end

@@ -1,0 +1,12 @@
+<% if current_user != user %>
+  <% if current_user.friend?(user) %>
+    <%= link_to "友達解除", friendship_path(user), method: :delete %>
+  <% elsif current_user.received_request?(user) %>
+    <%= link_to "承認", friendships_path({from_user_id: user.id}), method: :post %>
+    <%= link_to "拒否", friend_request_path(user), method: :patch %>
+  <% elsif current_user.sent_request?(user) %>
+    <%= link_to "取消", friend_request_path(user), method: :delete %>
+  <% else %>
+    <%= link_to "友達申請", friend_requests_path({user_id: user.id}), method: :post %>
+  <% end %>
+<% end %>

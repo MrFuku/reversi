@@ -1,0 +1,23 @@
+<div class="row">
+  <div id="" class="col-sm-4">
+    <h2>友達一覧</h2>
+    <ul class="friends">
+      <% current_user.friends.each do |friend| %>
+        <%= render "friend", user: friend %>
+      <% end %>
+
+    </ul>
+  </div>
+  <div id="" class="col-sm-4">
+    <h2>送った友達申請</h2>
+    <ul class="friends">
+      <%= render current_user.sent_users %>
+    </ul>
+  </div>
+  <div id="" class="col-sm-4">
+    <h2>受け取った友達申請</h2>
+    <ul class="friends">
+      <%= render current_user.received_users %>
+    </ul>
+  </div>
+</div>
