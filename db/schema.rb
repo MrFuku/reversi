@@ -61,7 +61,6 @@ ActiveRecord::Schema.define(version: 2019_04_03_060810) do
   end
 
   create_table "rooms", force: :cascade do |t|
-    t.integer "game_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "owner_id"
@@ -69,7 +68,6 @@ ActiveRecord::Schema.define(version: 2019_04_03_060810) do
     t.integer "turn_user"
     t.string "password_digest"
     t.boolean "only_friends", default: false, null: false
-    t.index ["game_id"], name: "index_rooms_on_game_id"
     t.index ["guest_id"], name: "index_rooms_on_guest_id"
     t.index ["owner_id"], name: "index_rooms_on_owner_id"
   end

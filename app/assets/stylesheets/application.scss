@@ -229,17 +229,8 @@ ul.users {
 /* 友達関連画面 */
 
 .friends-pages ul.users {
-
   li {
     height: 5rem;
-  }
-
-  &.friend-users {
-    height: 650px;
-  }
-
-  &.send-request-users {
-    height: 350px;
   }
 }
 

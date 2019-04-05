@@ -22,6 +22,23 @@ class Room < ApplicationRecord
     self.password_digest != nil
   end
 
+  def track_record(token)
+    User.transaction do
+      if token == "draw"
+        self.owner.add_draws
+        self.guest.add_draws
+      elsif token == "win_black"
+        self.owner.add_wins
+        self.guest.add_losses
+      elsif token == "win_white"
+        self.owner.add_losses
+        self.guest.add_wins
+      else
+        raise
+      end
+    end
+  end
+
   private
 
   def exist_guest

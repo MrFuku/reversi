@@ -57,4 +57,44 @@ RSpec.describe Room, type: :model do
        password: "password", password_confirmation: "password")
     expect(password_room.has_password?).to eq(true)
   end
+
+  describe "与えられた入力ごとに戦績の記録を行うこと" do
+    before do
+      @guest = create(:user)
+      @user.create_result
+      @guest.create_result
+      @room.guest = @guest
+    end
+    it "両者の戦績が０であること" do
+      expect(@room.owner.number_of_games).to eq(0)
+      expect(@room.guest.number_of_games).to eq(0)
+    end
+    context "黒が勝った場合" do
+      it "オーナーの勝ちが増え、ゲストの負けが増えること" do
+        expect{
+          expect{
+            @room.track_record("win_black")
+          }.to change{ @room.guest.number_of_losses }.by(1)
+        }.to change{ @room.owner.number_of_wins }.by(1)
+      end
+    end
+    context "白が勝った場合" do
+      it "オーナーの負けが増え、ゲストの勝ちが増えること" do
+        expect{
+          expect{
+            @room.track_record("win_white")
+          }.to change{ @room.guest.number_of_wins }.by(1)
+        }.to change{ @room.owner.number_of_losses }.by(1)
+      end
+    end
+    context "引き分けの場合" do
+      it "両者引き分けが増えること" do
+        expect{
+          expect{
+            @room.track_record("draw")
+          }.to change{ @room.guest.number_of_draws }.by(1)
+        }.to change{ @room.owner.number_of_draws }.by(1)
+      end
+    end
+  end
 end

@@ -88,6 +88,7 @@ class Game < ApplicationRecord
         else
           token = count_black > count_white ? "win_black" : "win_white"
         end
+        self.room.track_record(token)
       else
         # 2回目の手詰まり判定 falseの時
         # 相手のターンはパスされ、自分のターンに移行
