@@ -1,4 +1,36 @@
-<h2>ユーザー詳細</h2>
+<div class="user-details">
+  <h1>ユーザー詳細</h1>
+  <div class="user-icon">
+    <%= gravatar_for @user, size: 230 %>
+  </div>
 
-<%= "ユーザーID:#{@user.id}" %>
-<%= @user.email %>
+  <div class="user-name">
+    <h2><%= @user.name %></h2>
+  </div>
+  <% if current_user == @user %>
+    <div class="user-config">
+      <%= link_to "ユーザー情報編集画面へ", edit_user_registration_path %>
+    </div>
+  <% else %>
+    <div class="friend-tag">
+      <%= render "/friends/friend_tag", user: @user %>
+    </div>
+  <% end %>
+  <div class="game-results">
+    <table align="center">
+      <tr>
+        <th colspan="3" id="total-games">通算対戦数 <%= @user.number_of_games %></th>
+      </tr>
+      <tr>
+        <th>勝った数</th>
+        <th>負けた数</th>
+        <th>引き分けた数</th>
+      </tr>
+      <tr>
+        <td><%= @user.number_of_wins %></td>
+        <td><%= @user.number_of_losses %></td>
+        <td><%= @user.number_of_draws %></td>
+      </tr>
+    </table>
+  </div>
+</div>

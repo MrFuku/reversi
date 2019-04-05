@@ -11,6 +11,8 @@ class User < ApplicationRecord
   has_many :received_users, through: :received_requests, source: :from_user
   has_many :friendships, class_name: "Friendship", foreign_key: "user_id", dependent: :destroy
   has_many :friends, through: :friendships, source: :friend
+  has_one :result, dependent: :destroy
+  validates :name, presence: true, length: { maximum: 20 }
   validate :only_one_room
 
   def get_room
@@ -51,6 +53,37 @@ class User < ApplicationRecord
       self.friends.delete(user)
       user.friends.delete(self)
     end
+  end
+
+  def number_of_wins
+    self.result.wins
+  end
+
+  def number_of_losses
+    self.result.losses
+  end
+
+  def number_of_draws
+    self.result.draws
+  end
+
+  def number_of_games
+    self.number_of_wins + self.number_of_losses + self.number_of_draws
+  end
+
+  def add_wins
+    self.result.wins += 1
+    self.result.save!
+  end
+
+  def add_losses
+    self.result.losses += 1
+    self.result.save!
+  end
+
+  def add_draws
+    self.result.draws += 1
+    self.result.save!
   end
 
   private

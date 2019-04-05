@@ -1,0 +1,5 @@
+<% if @user != nil %>
+  $(".users .friend-tag#user-id-<%= @user.id %>").html("<%= escape_javascript(render '/friends/friend_tag', user: @user) %>")
+  $(".user-details .friend-tag").html("<%= escape_javascript(render '/friends/friend_tag', user: @user) %>")
+<% end %>
+$(".flash_messages").html("<%= escape_javascript(render '/layouts/flash_messages') %>")

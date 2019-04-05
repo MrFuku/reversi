@@ -13,9 +13,15 @@
     <%= render 'layouts/header' %>
     <div class="container">
       <div class="flash_messages">
-        <%= render 'layouts/flash_messages' %>
+        <%= render '/layouts/flash_messages' %>
       </div>
       <%= yield %>
     </div>
   </body>
 </html>
+
+<script type="text/javascript">
+  $(".flash_messages").click(function(){
+    $(".flash_messages >").fadeOut("fast");
+  });
+</script>
