@@ -8,6 +8,7 @@
   <p>ゲーム数 <%= @games.count %></p>
   <%= render @rooms %>
 </div>
+<%= link_to "テスト", static_pages_test_path, remote: true %>
 <div id="modal-frame" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 
 <% unless user_signed_in? %>

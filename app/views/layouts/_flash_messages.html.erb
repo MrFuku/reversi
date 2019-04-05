@@ -1,3 +1,3 @@
 <% flash.each do |message_type, message| %>
-  <div class="flash flash_<%= message_type %>"><%= message %></div>
+  <div class="notification-panel flash flash_<%= message_type %>" id="active"><%= message %></div>
 <% end %>

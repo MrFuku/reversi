@@ -1,5 +1,13 @@
 <h2>ユーザー一覧</h2>
 
+<%= will_paginate %>
 <ul class="users">
-  <%= render @users %>
+  <% @users.each do |user| %>
+    <li>
+      <div class="user">
+        <%= render user %>
+      </div>
+    </li>
+  <% end %>
 </ul>
+<%= will_paginate %>

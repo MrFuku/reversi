@@ -1,8 +1,17 @@
 @import "bootstrap";
 
-/* 全体 */
+/* 共通設定 */
+
+$gray-medium-light: #eaeaea;
+
+@mixin bottom-line {
+  border-bottom: 1px solid $gray-medium-light;
+}
+
+/* フラッシュメッセージ */
 
 .flash {
+  display: none;
   position: relative;
   padding: 0.75rem 1.25rem;
   margin-bottom: 1rem;
@@ -14,7 +23,7 @@
     border-color: #f5c6cb;
   }
   &_warning {
-    color: #8a6d3b;
+    color: #69522b;
     background-color: #fcf8e3;
     border-color: #faebcc;
   }
@@ -23,6 +32,41 @@
     background-color: #d4edda;
     border-color: #c3e6cb;
   }
+  &#active {
+    display: block;
+    position: fixed;
+    z-index: 101;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 0 20px;
+    opacity: 0.9;
+    border-radius: 0.25rem;
+    text-align: center;
+    overflow: hidden;
+    -webkit-box-shadow: 0 0 5px black;
+    -moz-box-shadow:    0 0 5px black;
+    box-shadow:         0 0 5px black;
+    -webkit-transform: translateY(-65px);
+    -webkit-animation: slideDown 3.5s 0s 1 ease forwards;
+    -moz-transform:    translateY(-65px);
+    -moz-animation:    slideDown 3.5s 1.0s 1 ease forwards;
+  }
+}
+
+@-webkit-keyframes slideDown {
+  0%, 100% { -webkit-transform: translateY(-65px); }
+  10%, 90% { -webkit-transform: translateY(10px); }
+}
+@-moz-keyframes slideDown {
+  0%, 100% { -moz-transform: translateY(-65px); }
+  10%, 90% { -moz-transform: translateY(10px); }
+}
+
+/* gravatar */
+
+img.gravatar {
+  border-radius: 50%;
 }
 
 /* ナビゲーションバー */
@@ -31,33 +75,240 @@ nav a {
   padding-right: 8px;
 }
 
-/* ゲームテーブル */
+/* ページネーション */
+div.pagination {
+  padding-left: 40px;
 
-td{
-  width: 60px; height: 60px;
-  border: 1px solid;
+  ul {
+    list-style: none;
+    position: relative;
+    float: left;
+
+    li {
+      margin: 0 1px;
+      position: relative;
+      float: left;
+
+      &.active a {
+        background: #777;
+        color: #FFF;
+      }
+
+      a {
+        display: block;
+        font-size: 16px;
+        padding: 0.6em 1em;
+        border-radius: 5px;
+        background: #ddd;
+        border: 1px solid #ccc;
+        color: #000;
+        text-decoration: none;
+
+        &:hover {
+          background: #777;
+          color: #FFF;
+        }
+      }
+    }
+  }
+}
+
+/* フレンドタグ */
+
+div.friend-tag{
+  display: inline-flex;
+
+  div{
+    position:relative;
+    width: 200px;
+    height: 27px;
+    margin-left: 8px;
+    border: 1px solid #aaa;
+    border-radius: 20px;
+    background: #d0d6d1;
+    text-align: center;
+
+    &:before {
+      background-color: rgba(0,0,0,0);
+      position: absolute;
+      border-radius: 20px;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      content: ' ';
+    }
+
+    &:hover:before {
+      background-color: rgba(0,0,0,0.15);
+    }
+
+    a {
+      color: #8a8a8a;
+      text-decoration: none;
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+
+/* ユーザー一覧 */
+
+ul.users {
+  li {
+    list-style: none;
+    overflow: auto;
+    padding: 25px 5px 5px 5px;
+    height: 5rem;
+    @include bottom-line;
+
+    img.gravatar {
+      margin-right: 8px;
+      margin-top: -7px;
+      float: left;
+    }
+
+    div.user-name {
+      width: 150px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: inline-flex;
+
+      a {
+        color: black;
+        text-decoration: none;
+        margin-left: 20px;
+      }
+    }
+  }
+}
+
+
+
+/* ユーザー詳細 */
+.user-details {
   text-align: center;
-  border: medium solid black;
+
+  * {
+    margin-bottom: 20px;
+  }
+  .user-icons {
+    text-align: center;
+  }
+
+  table{
+    width: 490px;
+
+    th{
+      padding: 7px 0;
+      width: 155px;
+      border: medium solid black;
+      background-color: #D4DFE6;
+
+      &#total-games {
+        background-color: #b3d7ff;
+      }
+
+    }
+    td{
+      border: medium solid black;
+      font-weight: bold;
+      text-align: center;
+      padding: 7px 0;
+      width: 155px;
+    }
+  }
 }
 
-table{
-  background: green;
+/* 友達関連画面 */
+
+.friends-pages ul.users {
+
+  li {
+    height: 5rem;
+  }
+
+  &.friend-users {
+    height: 650px;
+  }
+
+  &.send-request-users {
+    height: 350px;
+  }
 }
 
-.stone-b{
-  background: black;
-  margin: auto;
-  width: 45px; height: 45px;
-  border-radius: 50%;
-}
-.stone-w{
-  background: white;
-  margin: auto;
-  width: 45px; height: 45px;
-  border-radius: 50%;
+/* 入力フォーム */
+
+.field_with_errors {
+  .form-control {
+    color: #a94442;
+    border-color: #a94442;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  }
 }
 
-/*  */
+/* 新規ユーザー作成フォーム */
+.sign-up-user {
+  .col-md-6 {
+    margin-left: 25%;
+  }
+
+  div#user-create-btn {
+    text-align: right;
+    margin-top: 20px;
+  }
+}
+
+/* 新規ユーザー作成フォーム */
+.edit-user {
+  .col-md-6 {
+    margin-left: 25%;
+  }
+
+  div.btn-line {
+    display: block;
+    margin-top: 20px;
+    text-align: right;
+  }
+
+  .gravatar_edit {
+    margin: 20px 0;
+  }
+}
+
+/* ゲームテーブル */
+#board {
+  td{
+    width: 60px; height: 60px;
+    text-align: center;
+    border: medium solid black;
+  }
+
+  table{
+    background: green;
+  }
+
+  .stone-b{
+    background: black;
+    margin: auto;
+    width: 45px; height: 45px;
+    border-radius: 50%;
+  }
+  .stone-w{
+    background: white;
+    margin: auto;
+    width: 45px; height: 45px;
+    border-radius: 50%;
+  }
+}
+
+/* 吹き出し */
 
 .fukidashi {
   display: none;

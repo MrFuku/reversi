@@ -153,7 +153,7 @@ RSpec.describe "FriendRequests", type: :request do
           expect{
             delete friend_request_path @user2
           }.to change(FriendRequest, :count).by(-1)
-          expect(flash[:notice]).to eq("友達申請をキャンセルしました。")
+          expect(flash[:warning]).to eq("友達申請をキャンセルしました。")
           expect(response).to have_http_status(:redirect)
           assert_redirected_to friends_path
         end

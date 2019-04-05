@@ -1,0 +1,24 @@
+<% if current_user != user %>
+  <% if current_user.friend?(user) %>
+    <div class="friendships">
+      <%= link_to "友達登録済み", friendship_path(user), remote: true,
+       method: :delete, data: {confirm: "本当に登録を解除しますか？"}  %>
+    </div>
+  <% elsif current_user.received_request?(user) %>
+  <div class="received_request">
+    <%= link_to "友達申請を受け取りました" %>
+  </div>
+
+    <%= link_to "承認", friendships_path({from_user_id: user.id}), remote: true, method: :post %>
+    <%= link_to "拒否", friend_request_path(user), remote: true, method: :patch %>
+  <% elsif current_user.sent_request?(user) %>
+    <div class="sent-request">
+      <%= link_to "友達申請を取り消す", friend_request_path(user),
+        remote: true, method: :delete, data: {confirm: "本当に取り消しますか？"}  %>
+    </div>
+  <% else %>
+    <div class="non-friend">
+      <%= link_to "友達申請を送る", friend_requests_path({user_id: user.id}), remote: true, method: :post %>
+    </div>
+  <% end %>
+<% end %>

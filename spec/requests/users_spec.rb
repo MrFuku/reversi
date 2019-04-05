@@ -36,9 +36,10 @@ RSpec.describe "Users", type: :request do
       before{ sign_in @user }
       context "ユーザーが存在する場合" do
         it "ユーザーの詳細画面を表示すること" do
+          @user.create_result
           get user_path @user
           expect(response).to have_http_status(:success)
-          expect(response.body).to include @user.email
+          expect(response.body).to include @user.name
         end
       end
 

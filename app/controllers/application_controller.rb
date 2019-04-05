@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def authenticate_user!
+  def authenticate_user!(opts={})
     unless user_signed_in?
       flash[:alert] = "ログインまたは登録が必要です。"
       respond_to do |format|
@@ -10,6 +10,5 @@ class ApplicationController < ActionController::Base
         format.js { render js: "window.location = '/users/sign_in'" }
       end
     end
-
   end
 end
