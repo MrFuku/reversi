@@ -1,6 +1,6 @@
 <h2>ユーザー一覧</h2>
 
-<%= will_paginate %>
+<%= will_paginate @users, previous_label: '前へ', next_label: '次へ' %>
 <ul class="users">
   <% @users.each do |user| %>
     <li>
@@ -10,4 +10,4 @@
     </li>
   <% end %>
 </ul>
-<%= will_paginate %>
+<%= will_paginate @users, previous_label: '前へ', next_label: '次へ' %>

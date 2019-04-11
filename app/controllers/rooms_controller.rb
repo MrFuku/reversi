@@ -7,17 +7,24 @@ class RoomsController < ApplicationController
   end
 
   def show
-    @room.turn_user=0
-    @room.save!
-    @game = @room.game
-    @game.init_board
-    @game.set_message("turn_black") if @room.guest
-    @stones = @game.get_stones
-    @message = @game.get_message
-    @chats = @room.chats
+    if request.path_info != session[:ref]
+      session[:ref] = request.path_info
+      # 通常時の処理
+      @game = @room.game
+      @game.set_message("turn_black") if @room.guest
+      @stones = @game.get_stones
+      @message = @game.get_message
+      @chats = @room.chats
+    else
+      # reload時の処理
+      flash[:alert] = "再読み込み禁止です。"
+      redirect_to root_path
+    end
+
   end
 
   def create
+    @room = nil
     if current_user.get_room != nil
       flash[:alert] = "すでに参加しているルームがあるため、作成できません。"
     elsif params[:add_password] && params[:room][:password] != params[:room][:password_confirmation]
@@ -36,11 +43,22 @@ class RoomsController < ApplicationController
         end
       end
     end
-    redirect_to root_path
+
+    if @room
+      redirect_to room_path(@room)
+    else
+      redirect_to root_path
+    end
   end
 
   def edit
-    @room = Room.find(params[:id])
+    if !@room = Room.find_by(id: params[:id])
+      flash[:alert] = "このルームは削除されました。"
+      render :js => "window.location = '/'"
+    elsif @room.only_friends? && !@room.owner.friend?(current_user)
+      flash[:alert] = "このルームは友達限定です。"
+      render :js => "window.location = '/'"
+    end
   end
 
   def update
@@ -83,6 +101,42 @@ class RoomsController < ApplicationController
       flash[:notice] = "ルームを削除しました。"
     end
     redirect_to root_path
+  end
+
+  def update_score_board
+    @room = current_user.own_room || current_user.guest_room
+    @game = @room.game
+    stone = @room.color?(current_user)
+    if @game.end?
+      flash.now[:alert] = "ゲームが終了しました。"
+    elsif params[:message]
+      flash.now[:notice] = params[:message]
+    elsif @game.is_turn?(stone)
+      @plase = @game.place_to_put(stone)
+      flash.now[:notice] = "あなたのターンです。"
+    else
+      flash.now[:warning] = "相手のターンです。"
+    end
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def close_room
+
+    room = current_user.own_room || current_user.guest_room
+    if room.game.end?
+      @command = "game_end"
+    elsif room.guest == nil
+      @command = "game_end"
+    else
+      room.dropout_user(current_user)
+      @command = "cancel_game"
+    end
+    respond_to do |format|
+      format.js
+    end
   end
 
   private

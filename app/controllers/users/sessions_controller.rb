@@ -2,6 +2,7 @@
 
 class Users::SessionsController < Devise::SessionsController
   # before_action :configure_sign_in_params, only: [:create]
+  # before_action :already_online?, only: [:create]
 
   # GET /resource/sign_in
   # def new
@@ -18,10 +19,20 @@ class Users::SessionsController < Devise::SessionsController
   #   super
   # end
 
-  # protected
+  protected
 
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_sign_in_params
   #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
+  # end
+  # def already_online?
+  #   if Redis
+  #     unless Redis.current.sadd('online_users', current_user.id)
+  #       user_name = current_user.name
+  #       sign_out(resource)
+  #       flash[:alert] = "ログインできません。#{user_name}はすでにオンライン状態です。"
+  #       redirect_to root_path
+  #     end
+  #   end
   # end
 end

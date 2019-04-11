@@ -2,7 +2,8 @@
   <div class="row">
     <div class="col-sm-6">
       <h2>友達一覧 <span><%= "　#{@friends.count}人" %></span></h2>
-      <%= will_paginate @friends, param_name: "friends_page", inner_window: 1, outer_window: 0 %>
+      <%= will_paginate @friends, previous_label: '前へ', next_label: '次へ',
+       param_name: "friends_page", inner_window: 1, outer_window: 0 %>
       <ul class="friend-users users">
         <% @friends.each do |friend| %>
           <li>
@@ -13,7 +14,8 @@
     </div>
     <div class="col-sm-6">
       <h2>送った友達申請 <span><%= "　#{@sent_users.count}件" %></span></h2>
-      <%= will_paginate @sent_users, param_name: "sent_page", inner_window: 1, outer_window: 0 %>
+      <%= will_paginate @sent_users, previous_label: '前へ', next_label: '次へ',
+       param_name: "sent_page", inner_window: 1, outer_window: 0 %>
       <ul class="send-request-users users">
         <% @sent_users.each do |friend| %>
           <li>
@@ -22,7 +24,8 @@
         <% end %>
       </ul>
       <h2>受け取った友達申請 <span><%= "　#{@received_users.count}件" %></span></h2>
-      <%= will_paginate @received_users, param_name: "received_page", inner_window: 1, outer_window: 0 %>
+      <%= will_paginate @received_users, previous_label: '前へ', next_label: '次へ',
+       param_name: "received_page", inner_window: 1, outer_window: 0 %>
       <ul class="recived-request-users users">
         <% @received_users.each do |friend| %>
           <li>

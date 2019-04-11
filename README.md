@@ -1,24 +1,49 @@
-# README
+# ネットでオセロ
+[サイトURL](https://fuku-no-othello.herokuapp.com/)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## アプリ概要
+- アプリ上で他のユーザーとオセロの通信対戦ができるサービスです。
+- オセロの対戦中にプレイヤー同士でチャットをすることもできます。
 
-Things you may want to cover:
+## 主な機能
+- ユーザー機能
+  - ユーザー作成
+  - ユーザー編集
+  - ユーザー削除
+- 友達機能
+  - 友達申請
+  - 申請の取消
+  - 申請の受諾
+  - 申請の拒否
+  - 友達登録の解除
+- 対戦ルーム機能
+  - 対戦ルーム作成
+  - 対戦ルーム削除
+  - 参加ユーザー友達限定設定
+  - 参加パスワード設定
+  - 対戦ルームからのプレイヤー離脱検知
+- オセロ機能
+  - 基本的オセロ機能
+  - 対戦状況のリアルタイム配信
+  - ターン切り替え通知
+  - 対戦成績記録
+- チャット機能
+  - メッセージのリアルタイム配信
+  - 画面自動スクロール
 
-* Ruby version
+## 使用した技術
+- ユーザー認証
+  - device（一部カスタマイズ）
+- オンラインユーザー管理
+  - Redis
+- デプロイ
+  - Heroku
+- DB
+  - MySQL
+- RSpec
+  - 単体テスト
+  - 統合テスト
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## バージョン
+- Ruby 2.5.0
+- Rails 5.2.2

@@ -5,20 +5,63 @@
        method: :delete, data: {confirm: "本当に登録を解除しますか？"}  %>
     </div>
   <% elsif current_user.received_request?(user) %>
-  <div class="received_request">
-    <%= link_to "友達申請を受け取りました" %>
+  <div class="choice-list">
+    <%= link_to "承認", friendships_path({from_user_id: user.id}), remote: true, method: :post, class: "agree" %>
+    <%= link_to "拒否", friend_request_path(user), remote: true,
+     method: :patch, class: "reject", data: {confirm: "本当に拒否しますか？"} %>
+  </div>
+  <div class="received-request">
+    <span><%= link_to "友達申請を受けました" %></span>
   </div>
 
-    <%= link_to "承認", friendships_path({from_user_id: user.id}), remote: true, method: :post %>
-    <%= link_to "拒否", friend_request_path(user), remote: true, method: :patch %>
+
+
   <% elsif current_user.sent_request?(user) %>
     <div class="sent-request">
-      <%= link_to "友達申請を取り消す", friend_request_path(user),
+      <%= link_to "友達申請中", friend_request_path(user),
         remote: true, method: :delete, data: {confirm: "本当に取り消しますか？"}  %>
     </div>
   <% else %>
     <div class="non-friend">
-      <%= link_to "友達申請を送る", friend_requests_path({user_id: user.id}), remote: true, method: :post %>
+      <%= link_to "友達登録無し", friend_requests_path({user_id: user.id}), remote: true, method: :post %>
     </div>
   <% end %>
 <% end %>
+
+<script type="text/javascript">
+  $('.friendships a').hover(
+    function(){
+      $(this).text('友達登録を解除');
+    },function(){
+      $(this).text('友達登録済み');
+    }
+  );
+
+  $('.received-request').on({
+    'mouseenter':function(){
+      $(this).hide()
+    }
+  });
+
+  $('.choice-list').on({
+    'mouseleave':function(){
+      $(this).next(".received-request").show()
+    }
+  });
+
+  $('.sent-request a').hover(
+    function(){
+      $(this).text('申請を取り消す');
+    },function(){
+      $(this).text('友達申請中');
+    }
+  );
+
+  $('.non-friend a').hover(
+    function(){
+      $(this).text('友達申請を送る');
+    },function(){
+      $(this).text('友達登録無し');
+    }
+  );
+</script>

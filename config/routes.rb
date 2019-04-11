@@ -1,11 +1,15 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: {
-    registrations: 'users/registrations'
+    registrations: 'users/registrations',
+    sessions: 'users/sessions'
   }
   resources :users, only: [:index, :show]
   resources :friends, only: [:index]
   resources :friend_requests, only: [:create, :update, :destroy]
   resources :friendships, only: [:create, :destroy]
+
+  get 'rooms/update_score_board'
+  get 'rooms/close_room'
   resources :rooms
   post 'games/edit/:id', to: 'games#edit'
   post 'chats/create'

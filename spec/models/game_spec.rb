@@ -15,6 +15,7 @@ RSpec.describe Game, type: :model do
 
   before do
     @room = create(:room)
+    allow(@room).to receive(:track_record).and_return(true)
     @game = @room.build_game
     @game.init_board
   end

@@ -11,7 +11,7 @@ class Room < ApplicationRecord
     stone = "none"
     stone = "b" if user == owner
     stone = "w" if user == guest
-    stone
+    return stone
   end
 
   def belongs_to?(user)
@@ -20,6 +20,31 @@ class Room < ApplicationRecord
 
   def has_password?
     self.password_digest != nil
+  end
+
+  def track_record(token)
+    User.transaction do
+      if token == "draw"
+        self.owner.add_draws
+        self.guest.add_draws
+      elsif token == "win_black"
+        self.owner.add_wins
+        self.guest.add_losses
+      elsif token == "win_white"
+        self.owner.add_losses
+        self.guest.add_wins
+      else
+        raise
+      end
+    end
+  end
+
+  def dropout_user(user)
+    if belongs_to?(user) && self.owner && self.guest && self.game&.end? == false
+      token = self.color?(user) == "b" ? "win_white" : "win_black"
+      self.game.set_message(token)
+      self.track_record(token)
+    end
   end
 
   private

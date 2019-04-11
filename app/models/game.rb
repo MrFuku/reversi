@@ -31,18 +31,42 @@ class Game < ApplicationRecord
     save!
   end
 
+  def place_to_put(stone)
+    place = Array.new(8).map{Array.new(8)}
+    if is_turn?(stone)
+      for y in 0...8 do
+        for x in 0...8 do
+          if put_it?(y, x, stone)
+            place[y][x] = "can-be-#{stone}"
+          end
+        end
+      end
+    end
+    return place
+  end
+
   def put_stone(y, x, stone)
     if is_turn?(stone) && directions = put_it?(y, x, stone)
       reverse_stone(y, x, directions, stone)
       change_turn
+      true
     else
-      false
+      return false
     end
   end
 
   def end?
     token = get_stones[8]
     ["draw", "win_black", "win_white"].include?(token)
+  end
+
+  def is_turn?(stone)
+    token = get_stones[8]
+    if stone == "b"
+      ["turn_black", "pass_white"].include?(token)
+    elsif stone == "w"
+      ["turn_white", "pass_black"].include?(token)
+    end
   end
 
   private
@@ -57,15 +81,6 @@ class Game < ApplicationRecord
       end
     end
     true
-  end
-
-  def is_turn?(stone)
-    token = get_stones[8]
-    if stone == "b"
-      ["turn_black", "pass_white"].include?(token)
-    elsif stone == "w"
-      ["turn_white", "pass_black"].include?(token)
-    end
   end
 
   def range_check(y, x)
@@ -88,6 +103,7 @@ class Game < ApplicationRecord
         else
           token = count_black > count_white ? "win_black" : "win_white"
         end
+        self.room.track_record(token)
       else
         # 2回目の手詰まり判定 falseの時
         # 相手のターンはパスされ、自分のターンに移行

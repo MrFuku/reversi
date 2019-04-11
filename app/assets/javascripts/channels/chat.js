@@ -7,9 +7,20 @@ App.chat = App.cable.subscriptions.create("ChatChannel", {
     // Called when the subscription has been terminated by the server
   },
 
-  received: function(template) {
+  received: function(message) {
     // Called when there's incoming data on the websocket for this channel
-    addChat(template);
+
+    // チャット追加
+    var messages = document.getElementById('chat-contents')
+    messages.innerHTML += message
+
+    // 追加時のチャットウィンドウの自動スクロール処理
+    var tl = $('#chat-contents');
+    var scrollHeight = $(tl).get(0).scrollHeight;
+    var nowHeight = $(tl).scrollTop();
+    if (nowHeight > scrollHeight - 700) {
+      $(tl).scrollTop(scrollHeight);
+    }
   },
 
   post: function(template) {

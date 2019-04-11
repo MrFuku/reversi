@@ -1,21 +1,19 @@
 <div class="modal-dialog">
   <div class="modal-content">
-   <h1>新規ルーム作成フォーム</h1>
-   <div class="col-md-6 col-md-offset-3">
-     <%= form_for room, remote: true do |f| %>
-      <p><input type="checkbox" id="only_friends" name="only_friends" value="1"><label for="only_friends">友達限定にする</label></p>
-      <p><input type="checkbox" id="add_password" name="add_password" value="1"><label for="add_password">パスワードを設定する</label></p>
+   <h1>新規ルーム作成</h1>
+   <%= form_for room, remote: true do |f| %>
+    <p><input type="checkbox" id="only_friends" name="only_friends" value="1"><label for="only_friends">友達限定にする</label></p>
+    <p><input type="checkbox" id="add_password" name="add_password" value="1"><label for="add_password">パスワードを設定する</label></p>
 
-      <div id="password-box" style="display:none">
-        <%= f.label :password, "パスワード" %>
-        <%= f.password_field :password, class: "input-group-append" %>
+    <div id="password-box" style="display:none">
+      <%= f.label :password, "パスワード" %>
+      <%= f.password_field :password, class: "input-group-append" %>
 
-        <%= f.label :password_confirmation, "パスワード（確認）" %>
-        <%= f.password_field :password_confirmation, class: "input-group-append" %>
-      </div>
-      <%= f.submit "作成", class: "btn btn-primary" %>
-     <% end %>
-   </div>
+      <%= f.label :password_confirmation, "パスワード（確認）" %>
+      <%= f.password_field :password_confirmation, class: "input-group-append" %>
+    </div>
+    <%= f.submit "作成", class: "btn btn-primary" %>
+   <% end %>
   </div>
 </div>
 

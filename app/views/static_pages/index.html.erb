@@ -1,15 +1,60 @@
-<h1>StaticPages#index</h1>
-<p>Find me in app/views/static_pages/index.html.erb</p>
-
-<%= link_to "ルーム作成", new_room_path, remote: true, class: "need-login btn btn-lg btn-primary" %>
-<p class="fukidashi">ログインが必要です</p>
-<div class="rooms">
-  <p>ルーム数　<%= @rooms.count %></p>
-  <p>ゲーム数 <%= @games.count %></p>
-  <%= render @rooms %>
+<div class="top-page">
+  <%= link_to "ルーム作成", new_room_path, remote: true, class: "need-login btn btn-lg btn-primary" %>
+  <%= link_to "テスト", static_pages_test_path, remote: true %>
+  <%= "接続数: #{@count}" %>
+  <p class="fukidashi">ログインが必要です</p>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="box rooms-box">
+        <h3>対戦待ちルーム</h3>
+        <div class="rooms">
+          <%= "対戦待ちのルームはありません。" if @rooms.size == 0 %>
+          <% @rooms.each do |room| %>
+          <li>
+            <%= gravatar_for room.owner, size: 30 %>
+            <%= link_to room.owner.name, room.owner %>
+            <%= link_to "ルーム#{room.id}", edit_room_path(room), class: "cover-link", remote: true  %>
+            <%= link_to "ルーム#{room.id}", edit_room_path(room), remote: true  %>
+            <% if room.has_password? %>
+              <span>
+                <i class="material-icons rotate" style="margin-right:-5px" >vpn_key</i>
+                パスワード
+              </span>
+            <% end %>
+            <% if room.only_friends? %>
+              <span>
+                <%= mi.group %>
+                友達限定
+              </span>
+            <% end %>
+            <% if user_signed_in? && room.owner == current_user %>
+              <%= link_to "削除する", "/rooms/#{room.id}", method: :delete, data: {confirm: "本当に削除しますか？"} %>
+            <% end %>
+          </li>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="box online_users-box">
+        <%= will_paginate @online_users, inner_window: 1, outer_window: 0 %>
+        <h3>ログイン中のユーザー</h3>
+        <div class="online_users">
+          <%= "ログイン中のユーザーはいません。" if @online_users.size == 0 %>
+          <% @online_users.each do |user| %>
+            <li>
+              <%= gravatar_for user, size: 30 %>
+              <%= link_to user.name, user, class: "cover-link" %>
+              <%= link_to user.name, user %>
+            </li>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="modal-frame" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 </div>
-<%= link_to "テスト", static_pages_test_path, remote: true %>
-<div id="modal-frame" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+
 
 <% unless user_signed_in? %>
   <script type="text/javascript">
