@@ -1,0 +1,22 @@
+<div class="score black">
+  <div class="stone-color">
+    黒：<%= game.count_black %>
+  </div>
+  <% if room.owner %>
+    <div class="user-info">
+      <%= gravatar_for room.owner, size: 30 %>
+      <%= "  #{room.owner.name}" %>
+    </div>
+  <% end %>
+</div>
+<div class="score white">
+  <div class="stone-color">
+    白：<%= game.count_white %>
+  </div>
+  <% if room.guest %>
+    <div class="user-info">
+      <%= gravatar_for room.guest, size: 30 %>
+      <%= "  #{room.guest.name}" %>
+    </div>
+  <% end %>
+</div>

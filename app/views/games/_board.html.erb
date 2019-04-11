@@ -1,9 +1,15 @@
-<%= @message %>
 <table id="board-table">
+  <div class="message">
+    <%= game.get_message %>
+  </div>
+  <div class="game-end">
+    <button id="btn" onclick="alertFunction1()">ゲーム終了</button>
+    ※ページを再読み込みしたり、移動すると対戦が終了してしまいます。
+  </div>
   <% for y in 0...8 %>
     <tr><% for x in 0...8 %>
-      <td onclick="put_stone(<%= y %>,<%= x %>)">
-        <div id="<%= y %><%= x %>" class="stone-<%= stones[y][x] %>" ></div>
+      <td onclick="put_stone(<%= y %>,<%= x %>)" class=" <%= "#{@plase[y][x]}" if @plase %>">
+        <div class="stone-<%= stones[y][x] %>" ></div>
       </td>
     <% end %>
   </tr>
@@ -14,9 +20,30 @@
   var put_stone = function(y, x) {
     var thisId = "#" + y + "" + x;
     var color = $("#select-turn").val();
-    $.ajax({url: '/games/edit/<%= @game.id %>', type: "POST", data:{ y:y, x:x, color:color }});
+    $.ajax({url: '/games/edit/<%= game.id %>', type: "POST", data:{ y:y, x:x, color:color }});
+  };
+
+  function alertFunction1() {
+    message = "本当に終了しますか？"
+    <% if !game.end? && room.guest %>
+      message = "ここでゲームを終了すると負けになります\n" + message
+    <% end %>
+    if(confirm( message )){
+      console.log("yes")
+      $.ajax({url: '/rooms/close_room', type: "GET"});
+    }else{
+      console.log("no")
+    }
   }
-  <% if @game.end? %>
-    $("#game-end").html('<%= link_to "ゲーム終了", "/rooms/#{@room.id}", method: :delete %>')
+  <% if @plase %>
+    $("td").hover(
+      function(){
+        $(this).css('background-color', 'rgba(153, 201, 255, 0.76)');
+      },
+      function(){
+        $(this).css('background-color', 'rgba(0,0,0,0)');
+      }
+    );
   <% end %>
+
 </script>

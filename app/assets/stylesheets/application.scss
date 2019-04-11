@@ -1,4 +1,5 @@
 @import "bootstrap";
+@import "material_icons";
 
 /* 共通設定 */
 
@@ -7,6 +8,30 @@ $gray-medium-light: #eaeaea;
 @mixin bottom-line {
   border-bottom: 1px solid $gray-medium-light;
 }
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 20px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -moz-font-feature-settings: 'liga';
+  -moz-osx-font-smoothing: grayscale;
+
+  display: inline-flex;
+  vertical-align: top;
+
+  &.rotate {
+    transform: rotate(90deg);
+  }
+}
+
+
 
 /* フラッシュメッセージ */
 
@@ -70,9 +95,46 @@ img.gravatar {
 }
 
 /* ナビゲーションバー */
-nav a {
-  color: white;
-  padding-right: 8px;
+
+nav {
+  li {
+    margin-left: 15px;
+  }
+
+  a {
+    color: white;
+    span {
+      display: table-cell;
+      width: 120px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .dropdown-menu {
+    background: #929292;
+  }
+}
+
+/* モーダル */
+.modal-content {
+  width: 400px;
+  padding: 20px;
+
+  h1 {
+    text-align: center;
+  }
+  form {
+    margin-top: 20px;
+    margin-left: 80px;
+    width: 200px;
+
+    .btn {
+      margin-top: 20px;
+      float: right;
+    }
+  }
 }
 
 /* ページネーション */
@@ -120,30 +182,86 @@ div.friend-tag{
 
   div{
     position:relative;
-    width: 200px;
+    width: 170px;
     height: 27px;
     margin-left: 8px;
     border: 1px solid #aaa;
     border-radius: 20px;
     background: #d0d6d1;
     text-align: center;
+    font-weight: bold;
+    -webkit-transition: all 0.1s ease;
+    -moz-transition: all 0.1s ease;
+    -o-transition: all 0.1s ease;
+    transition: all  0.1s ease;
 
-    &:before {
-      background-color: rgba(0,0,0,0);
+    &.friendships {
+      background: #00acee;
+      &:hover {
+        background: #ef5d5d;
+      }
+      a {
+        color: white;
+      }
+    }
+
+    &.choice-list {
+      border: none;
+      background: white;
+      display: -webkit-box;
+      a {
+        position: relative;
+        display: table-cell;
+        margin: 10px;
+        width: 85px;
+        height: 27px;
+        border: 1px solid #aaa;
+        border-radius: 20px;
+        background: #d0d6d1;
+        &.agree:hover {
+          background: #00acee;
+          color: white;
+        }
+        &.reject:hover {
+          background: #ef5d5d;
+          color: white;
+        }
+      }
+    }
+
+    &.received-request {
       position: absolute;
-      border-radius: 20px;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      content: ' ';
+      background: #ffb52a;
+      a {
+        font-size: 15px;
+        color: #686b6d;
+      }
     }
 
-    &:hover:before {
-      background-color: rgba(0,0,0,0.15);
+    &.sent-request {
+      background: #8ee692;
+      &:hover {
+        background: #ef5d5d;
+        & > a {
+          color: white;
+        }
+      }
+      a{
+        color: #686b6d;
+      }
     }
 
-    a {
+    &.non-friend {
+      background: #d0d6d1;
+      &:hover {
+        background: #8ee692;
+      }
+      a{
+        color: #686b6d;
+      }
+    }
+
+    & > a {
       color: #8a8a8a;
       text-decoration: none;
       display: block;
@@ -152,6 +270,70 @@ div.friend-tag{
       left: 0;
       width: 100%;
       height: 100%;
+    }
+  }
+}
+
+/* トップページ */
+.top-page {
+  padding-top: 20px;
+
+  div.box {
+    border-radius: 5px;
+    margin-top: 20px;
+    padding: 10px;
+
+    li {
+      position: relative;
+      z-index: 1;
+      overflow: auto;
+      padding: 18px 5px 5px 10px;
+      height: 4rem;
+      border-radius: 5px;
+      margin: 10px;
+      list-style: none;
+
+      a {
+        position: relative;
+        z-index: 3;
+
+        &.cover-link {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          text-indent:-999px;
+          z-index: 2;
+
+          &:hover {
+            background-color: rgba(0,0,0,0.1);
+          }
+        }
+      }
+    }
+  }
+
+  div.rooms-box {
+    background-color: aliceblue;
+    border: 3px solid #ccb161;
+
+    li {
+      background-color: #d0e4f5;
+    }
+
+    span {
+      font-size: 13px;
+      margin-left: 15px;
+    }
+  }
+
+  div.online_users-box {
+    background-color: #dcf9dc;
+    border: 3px solid #ccb161;
+
+    li {
+      background-color: #afeaa1;
     }
   }
 }
@@ -174,7 +356,7 @@ ul.users {
     }
 
     div.user-name {
-      width: 150px;
+      width: 120px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -188,8 +370,6 @@ ul.users {
     }
   }
 }
-
-
 
 /* ユーザー詳細 */
 .user-details {
@@ -214,7 +394,6 @@ ul.users {
       &#total-games {
         background-color: #b3d7ff;
       }
-
     }
     td{
       border: medium solid black;
@@ -227,7 +406,6 @@ ul.users {
 }
 
 /* 友達関連画面 */
-
 .friends-pages ul.users {
   li {
     height: 5rem;
@@ -256,7 +434,20 @@ ul.users {
   }
 }
 
-/* 新規ユーザー作成フォーム */
+/* ログインフォーム */
+.sign-in-user {
+  .col-md-6 {
+    margin-left: 25%;
+
+    .btn {
+      text-align: right;
+      margin-top: 20px;
+      float: right;
+    }
+  }
+}
+
+/* ユーザー編集フォーム */
 .edit-user {
   .col-md-6 {
     margin-left: 25%;
@@ -279,6 +470,20 @@ ul.users {
     width: 60px; height: 60px;
     text-align: center;
     border: medium solid black;
+
+    &.can-be-b:hover > div {
+      background: rgba(0,0,0,0.5);
+      margin: auto;
+      width: 45px; height: 45px;
+      border-radius: 50%;
+    }
+
+    &.can-be-w:hover > div {
+      background: rgba(255,255,255,0.6);
+      margin: auto;
+      width: 45px; height: 45px;
+      border-radius: 50%;
+    }
   }
 
   table{
@@ -296,6 +501,44 @@ ul.users {
     margin: auto;
     width: 45px; height: 45px;
     border-radius: 50%;
+  }
+
+  div.game-end {
+    margin-bottom: 5px;
+  }
+}
+
+div.message {
+  background-color: bisque;
+  font-size: 30px;
+  margin: 20px 0;
+  width: 550px;
+  border: 3px solid #ccae54;
+  border-radius: 10px;
+  padding: 0 10px;
+}
+
+div.score-board {
+  background-color: #b3d7ff;
+  border: 3px solid;
+  border-radius: 14px;
+  font-size: 30px;
+  padding: 0 15px;
+  margin-bottom: 20px;
+
+  .score {
+    display: -webkit-box;
+  }
+  div {
+    &.stone-color {
+      width: 100px;
+    }
+
+    &.user-info {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 }
 

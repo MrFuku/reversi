@@ -1,0 +1,3 @@
+$(".score-board").html("<%= escape_javascript(render '/rooms/score', { room: @room, game: @room.game }) %>")
+$("#board").html("<%= escape_javascript(render '/games/board', { room: @room, game: @room.game, stones: @room.game.get_stones }) %>")
+$(".flash_messages").html("<%= escape_javascript(render '/layouts/flash_messages') %>")

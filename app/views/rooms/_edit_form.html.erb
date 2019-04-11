@@ -1,15 +1,12 @@
 <div class="modal-dialog">
   <div class="modal-content">
    <h1>参加用フォーム</h1>
-   <div class="col-md-6 col-md-offset-3">
-
-     <%= form_with url: "/rooms/#{room.id}", method: "patch" do %>
-       <% if room.has_password? %>
-         <%= label :password, "パスワード" %>
-         <%= password_field :room, :password %>
-       <% end %>
-       <%= submit_tag "参加する", class: "btn btn-primary" %>
+   <%= form_with url: "/rooms/#{room.id}", method: "patch" do %>
+     <% if room.has_password? %>
+       <%= label :password, "パスワード" %>
+       <%= password_field :room, :password %>
      <% end %>
-   </div>
+     <%= submit_tag "参加する", class: "btn btn-primary" %>
+   <% end %>
   </div>
 </div>

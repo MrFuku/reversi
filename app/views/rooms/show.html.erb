@@ -1,27 +1,32 @@
-<h1>Rooms#show</h1>
-<p><%= "ルームオーナーID:#{@room.owner&.id}  ルームゲストID:#{@room.guest&.id}  ログイン中のユーザーID:#{current_user&.id}" %></p>
 <div class="row">
+
   <div id="board" class="col-sm-7">
-    <%= render '/games/board', stones: @stones %>
+    <%= render '/games/board', { room: @room, game: @room.game, stones: @room.game.get_stones } %>
   </div>
-  <div id="chats" class="col-sm-5">
-    <form class="form-inline">
-      <div class="form-group">
-        <input type="text" class="form-control" id="chat-input">
-        <input type="submit" class="btn btn-primary" id="send-chat"></input>
-      </div>
-    </form>
-    <div id="chat-contents">
-      <% @chats.each do |chat| %>
-        <div <%= 'class=mine' if chat.user_id == current_user.id %>>
-          <p><%= chat.content %></p>
+  <div class="col-sm-5">
+    <div class="score-board">
+      <%= render '/rooms/score', { room: @room, game: @room.game } %>
+    </div>
+    <div id="chats">
+      <form class="form-inline">
+        <div class="form-group">
+          <input type="text" class="form-control" id="chat-input" placeholder="チャットを送る">
+          <input type="submit" class="btn btn-primary" id="send-chat"></input>
         </div>
-      <% end %>
+      </form>
+      <div id="chat-contents">
+        <% @room.chats.each do |chat| %>
+          <div <%= 'class=mine' if chat.user_id == current_user.id %>>
+            <p><%= chat.content %></p>
+          </div>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>
 
 <script type="text/javascript">
+
   // チャット送信時、テキストが空なら送信しない
   $('#send-chat').click(function() {
     const inputValue = $('#chat-input').val()
@@ -31,29 +36,16 @@
     return false
   });
 
-  // ページ読み込み時、チャットウィンドウを最下部までスクロールする
-  var tl = $('#chat-contents');
-  $(tl).scrollTop($(tl).get(0).scrollHeight);
+  // リンククリック時の処理
+  $('a').click(function() {
+    alert("ページから移動するには対戦を終了させてください。")
+    return false;
+  });
 
-  // チャットメッセージ追加時の処理
-  function addChat(template) {
-    //
-    var messages = document.getElementById('chat-contents')
-    var div_id = $(template).attr('class')
-    var current_user_id = <%= current_user.id %>
-    template = $(template).html();
-    if (div_id == current_user_id) {
-      template = '<div class=mine>' + template + '</div>'
-    } else {
-      template = '<div>' + template + '</div>'
-    }
-    messages.innerHTML += template
-
-    // 追加時のチャットウィンドウの自動スクロール処理
-    var scrollHeight = $(tl).get(0).scrollHeight;
-    var nowHeight = $(tl).scrollTop();
-    if (nowHeight > scrollHeight - 700) {
-      $(tl).scrollTop(scrollHeight);
-    }
-  }
+  <% if @room.guest == current_user %>
+    App.room.speak("participation_guest")
+    setTimeout(function(){
+      App.room.speak("game_update")
+    },3000);
+  <% end %>
 </script>

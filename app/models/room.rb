@@ -11,7 +11,7 @@ class Room < ApplicationRecord
     stone = "none"
     stone = "b" if user == owner
     stone = "w" if user == guest
-    stone
+    return stone
   end
 
   def belongs_to?(user)
@@ -36,6 +36,14 @@ class Room < ApplicationRecord
       else
         raise
       end
+    end
+  end
+
+  def dropout_user(user)
+    if belongs_to?(user) && self.owner && self.guest && self.game&.end? == false
+      token = self.color?(user) == "b" ? "win_white" : "win_black"
+      self.game.set_message(token)
+      self.track_record(token)
     end
   end
 
