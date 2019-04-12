@@ -21,8 +21,8 @@
         <%= f.submit "ログイン", class: "btn btn-primary" %>
       <% end %>
 
-      <p><%= link_to "新規ユーザーを作成", "#{}" %></p>
-      <p><%= link_to "パスワードを忘れた", "#{}" %></p>
+      <p><%= link_to "新規ユーザーを作成", new_user_registration_path %></p>
+      <p><%= link_to "パスワードを忘れた", new_user_password_path %></p>
 
       <button type="button" name="button" class="samplebtn" onclick="sampleLogin()">サンプルユーザーでログイン</button>
     </div>

@@ -24,6 +24,7 @@ RSpec.describe "Rooms", type: :request do
       @user = create(:user)
       @room = @user.create_own_room
       @room.create_game
+      @room.game.init_board
     end
     context "未ログイン時" do
       it "ログイン画面にリダイレクトされること" do
@@ -85,7 +86,7 @@ RSpec.describe "Rooms", type: :request do
           expect(flash[:notice]).to eq("ルームを作成しました。")
           expect(@user.own_room.only_friends?).to eq(false)
           expect(@user.own_room.has_password?).to eq(false)
-          assert_redirected_to root_path
+          assert_redirected_to room_path @user.own_room
           expect(response).to have_http_status(:redirect)
         end
       end
@@ -97,7 +98,7 @@ RSpec.describe "Rooms", type: :request do
           expect(flash[:notice]).to eq("ルームを作成しました。")
           expect(@user.own_room.only_friends?).to eq(true)
           expect(@user.own_room.has_password?).to eq(false)
-          assert_redirected_to root_path
+          assert_redirected_to room_path @user.own_room
           expect(response).to have_http_status(:redirect)
         end
       end
@@ -109,7 +110,7 @@ RSpec.describe "Rooms", type: :request do
           expect(flash[:notice]).to eq("ルームを作成しました。")
           expect(@user.own_room.only_friends?).to eq(false)
           expect(@user.own_room.has_password?).to eq(true)
-          assert_redirected_to root_path
+          assert_redirected_to room_path @user.own_room
           expect(response).to have_http_status(:redirect)
         end
       end
@@ -121,7 +122,7 @@ RSpec.describe "Rooms", type: :request do
           expect(flash[:notice]).to eq("ルームを作成しました。")
           expect(@user.own_room.only_friends?).to eq(true)
           expect(@user.own_room.has_password?).to eq(true)
-          assert_redirected_to root_path
+          assert_redirected_to room_path @user.own_room
           expect(response).to have_http_status(:redirect)
         end
       end

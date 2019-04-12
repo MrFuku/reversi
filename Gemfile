@@ -21,6 +21,7 @@ gem 'bootstrap-will_paginate', '1.0.0'
 gem 'redis-rails'
 gem 'materialize-sass'
 gem 'material_icons'
+gem 'dotenv-rails'
 
 group :development, :test do
   gem 'sqlite3', '~> 1.3.6'
