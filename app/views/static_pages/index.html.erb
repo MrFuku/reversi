@@ -1,5 +1,8 @@
 <div class="top-page">
-  <%= link_to "ルーム作成", new_room_path, remote: true, class: "need-login btn btn-lg btn-primary" %>
+  <% unless user_signed_in? %>
+    <p><%= link_to "ゲストとしてログイン", guest_new_path, class: "btn btn-info guest-login" %></p>
+  <% end %>
+  <%= link_to "対戦ルーム作成", new_room_path, remote: true, class: "need-login btn btn-lg btn-primary" %>
   <%= link_to "テスト", static_pages_test_path, remote: true %>
   <%= "接続数: #{@count}" %>
   <p class="fukidashi">ログインが必要です</p>
