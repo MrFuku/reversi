@@ -73,13 +73,13 @@ Rails.application.configure do
   host = 'https://fuku-no-othello.herokuapp.com'
   config.action_mailer.default_url_options = { host: host, protocol: 'https' }
   config.action_mailer.smtp_settings = {
-    :address        => 'smtp.sendgrid.net',
-    :port           => 587,
-    :authentication => :plain,
-    :user_name      => ENV['SENDGRID_USERNAME'],
-    :password       => ENV['SENDGRID_PASSWORD'],
-    :domain         => 'heroku.com',
-    :enable_starttls_auto => true
+    :enable_starttls_auto => true,
+    :address => "smtp.gmail.com",
+    :port => 587,
+    :domain => 'smtp.gmail.com',
+    :user_name => ENV['MYAPP_SMTP_USERNAME'], #gmailアドレス
+    :password => ENV['MYAPP_SMTP_PASSWORD'], #gmailパスワード
+    :authentication => 'login',
   }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
