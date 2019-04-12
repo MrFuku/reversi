@@ -31,6 +31,10 @@ $gray-medium-light: #eaeaea;
   }
 }
 
+.guest-login {
+  font-size: 12px;
+  float: right;
+}
 
 
 /* フラッシュメッセージ */
@@ -105,15 +109,17 @@ nav {
     color: white;
     span {
       display: table-cell;
-      width: 120px;
+      max-width: 150px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
   }
 
-  .dropdown-menu {
+  .dropdown-menu.show {
     background: #929292;
+    right: 0px;
+    left: auto;
   }
 }
 

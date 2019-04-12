@@ -1,0 +1,21 @@
+<div class="sign-up-user">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <h2>ゲストユーザー作成</h2>
+      <%= form_for(@user , url: guest_create_path) do |f| %>
+        <%= render "users/shared/error_messages", object: f.object %>
+
+        <%= f.label :name, '名前（ゲストの初期パスワードは「password」です）' %>
+        <%= f.text_field :name, class: 'form-control', value: "ゲスト" %>
+
+        <%= f.hidden_field :password, value: "password" %>
+
+        <%= f.hidden_field :password_confirmation, value: "password" %>
+
+        <div id="user-create-btn">
+          <%= f.submit "作成する", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

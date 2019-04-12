@@ -7,7 +7,8 @@ Rails.application.routes.draw do
   resources :friends, only: [:index]
   resources :friend_requests, only: [:create, :update, :destroy]
   resources :friendships, only: [:create, :destroy]
-
+  get 'guest/new', to: 'users#guest_new'
+  post 'guest/create', to: 'users#guest_create'
   get 'rooms/update_score_board'
   get 'rooms/close_room'
   resources :rooms

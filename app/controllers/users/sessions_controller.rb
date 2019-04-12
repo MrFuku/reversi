@@ -3,6 +3,7 @@
 class Users::SessionsController < Devise::SessionsController
   # before_action :configure_sign_in_params, only: [:create]
   # before_action :already_online?, only: [:create]
+  before_action :online_delete, only: [:destroy]
 
   # GET /resource/sign_in
   # def new
@@ -38,5 +39,9 @@ class Users::SessionsController < Devise::SessionsController
   def after_sign_in_path_for(resource)
     super
     resource
+  end
+
+  def online_delete
+    Redis.current.srem('online_users', current_user.id)
   end
 end
