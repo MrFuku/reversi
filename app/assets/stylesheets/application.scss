@@ -464,6 +464,32 @@ ul.users {
   }
 }
 
+/* パスワード再設定用フォーム */
+.password-reset {
+  .col-md-6 {
+    margin-left: 25%;
+
+    .btn {
+      text-align: right;
+      margin-top: 20px;
+      float: right;
+    }
+  }
+}
+
+/* パスワード再設定メール送信 */
+.forgot-password {
+  .col-md-6 {
+    margin-left: 25%;
+
+    .btn {
+      text-align: right;
+      margin-top: 20px;
+      float: right;
+    }
+  }
+}
+
 /* ゲームテーブル */
 #board {
   td{

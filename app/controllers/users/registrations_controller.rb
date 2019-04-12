@@ -10,9 +10,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+    super
+    Users::Mailer.registration_confirmation(resource).deliver unless resource.invalid?
+  end
 
   # GET /resource/edit
   # def edit
@@ -54,6 +55,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def after_sign_up_path_for(resource)
     Result.create(user: resource)
     super(resource)
+    resource
   end
 
   # The path used after sign up for inactive accounts.
