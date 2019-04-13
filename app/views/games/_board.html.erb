@@ -3,7 +3,7 @@
     <%= game.get_message %>
   </div>
   <div class="game-end">
-    <button id="btn" onclick="alertFunction1()">ゲーム終了</button>
+    <button id="btn" onclick="closeRoom()">ゲーム終了</button>
     ※ページを再読み込みしたり、移動すると対戦が終了してしまいます。
   </div>
   <% for y in 0...8 %>
@@ -23,18 +23,16 @@
     $.ajax({url: '/games/edit/<%= game.id %>', type: "POST", data:{ y:y, x:x, color:color }});
   };
 
-  function alertFunction1() {
+  function closeRoom() {
     message = "本当に終了しますか？"
     <% if !game.end? && room.guest %>
       message = "ここでゲームを終了すると負けになります\n" + message
     <% end %>
     if(confirm( message )){
-      console.log("yes")
       $.ajax({url: '/rooms/close_room', type: "GET"});
-    }else{
-      console.log("no")
     }
   }
+
   <% if @plase %>
     $("td").hover(
       function(){

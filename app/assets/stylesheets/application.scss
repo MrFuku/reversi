@@ -127,6 +127,7 @@ nav {
 .modal-content {
   width: 400px;
   padding: 20px;
+  margin: auto;
 
   h1 {
     text-align: center;
@@ -341,6 +342,25 @@ div.friend-tag{
     li {
       background-color: #afeaa1;
     }
+  }
+}
+
+/* 遊び方ページ */
+.about {
+  h3 {
+    text-align: center;
+    margin-top: 50px;
+    background: aliceblue;
+  }
+  p {
+    margin-left: 100px;
+    width: 350px;
+  }
+
+  .btn {
+    float: none;
+    display: table;
+    margin: 0px auto;
   }
 }
 

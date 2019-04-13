@@ -105,8 +105,8 @@ class RoomsController < ApplicationController
 
   def update_score_board
     @room = current_user.own_room || current_user.guest_room
-    @game = @room.game
-    stone = @room.color?(current_user)
+    @game = @room&.game
+    stone = @room&.color?(current_user)
     if @game.end?
       flash.now[:alert] = "ゲームが終了しました。"
     elsif params[:message]
@@ -124,8 +124,12 @@ class RoomsController < ApplicationController
   end
 
   def close_room
-
     room = current_user.own_room || current_user.guest_room
+    if room == nil
+      respond_to do |format|
+        format.js { render js: "window.location = '/'" }
+      end
+    end
     if room.game.end?
       @command = "game_end"
     elsif room.guest == nil
@@ -136,6 +140,14 @@ class RoomsController < ApplicationController
     end
     respond_to do |format|
       format.js
+    end
+  end
+
+  def exist_room
+    if current_user.get_room == nil
+      respond_to do |format|
+        format.js { render js: "alert('予期せぬエラーが起きました。\nトップ画面に戻ります。'); window.location = '/'" }
+      end
     end
   end
 

@@ -11,9 +11,10 @@ Rails.application.routes.draw do
   post 'guest/create', to: 'users#guest_create'
   get 'rooms/update_score_board'
   get 'rooms/close_room'
+  get 'rooms/exist_room'
   resources :rooms
   post 'games/edit/:id', to: 'games#edit'
   post 'chats/create'
-  get 'static_pages/test', to: 'static_pages#test'
+  get 'about', to: 'static_pages#about'
   root to: 'static_pages#index'
 end
