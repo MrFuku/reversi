@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!, only: [:index, :show]
+  before_action :not_login, only: [:guest_new, :guest_create]
 
   def index
     @users = User.paginate(page: params[:page])
@@ -38,5 +39,12 @@ class UsersController < ApplicationController
 
   def guest_params
     params.require(:user).permit(:name, :password, :password_confirmation)
+  end
+
+  def not_login
+    if user_signed_in?
+      flash[:notice] = "すでにログインしています。"
+      redirect_to root_path
+    end
   end
 end
