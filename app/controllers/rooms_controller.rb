@@ -20,7 +20,6 @@ class RoomsController < ApplicationController
       flash[:alert] = "再読み込み禁止です。"
       redirect_to root_path
     end
-
   end
 
   def create
@@ -105,8 +104,8 @@ class RoomsController < ApplicationController
 
   def update_score_board
     @room = current_user.own_room || current_user.guest_room
-    @game = @room&.game
-    stone = @room&.color?(current_user)
+    @game = @room.game
+    stone = @room.color?(current_user)
     if @game.end?
       flash.now[:alert] = "ゲームが終了しました。"
     elsif params[:message]
@@ -129,24 +128,17 @@ class RoomsController < ApplicationController
       respond_to do |format|
         format.js { render js: "window.location = '/'" }
       end
-    end
-    if room.game.end?
-      @command = "game_end"
-    elsif room.guest == nil
-      @command = "game_end"
     else
-      room.dropout_user(current_user)
-      @command = "cancel_game"
-    end
-    respond_to do |format|
-      format.js
-    end
-  end
-
-  def exist_room
-    if current_user.get_room == nil
+      if room.game.end?
+        @command = "game_end"
+      elsif room.guest == nil
+        @command = "game_end"
+      else
+        room.dropout_user(current_user)
+        @command = "cancel_game"
+      end
       respond_to do |format|
-        format.js { render js: "alert('予期せぬエラーが起きました。\nトップ画面に戻ります。'); window.location = '/'" }
+        format.js
       end
     end
   end
