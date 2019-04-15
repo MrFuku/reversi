@@ -1,5 +1,6 @@
 # ネットでオセロ
-[サイトURL](http://18.182.233.52/)
+[サイトURL](https://fuku-no-othello.herokuapp.com)
+[デモ動画](https://youtu.be/E1hvZuW9m7U)
 
 ## アプリ概要
 - Railsチュートリアルのサンプルを拡張したアプリです。
