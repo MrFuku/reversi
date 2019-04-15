@@ -1,5 +1,6 @@
 # ネットでオセロ
 [サイトURL](https://fuku-no-othello.herokuapp.com)
+
 [デモ動画](https://youtu.be/E1hvZuW9m7U)
 
 ## アプリ概要
