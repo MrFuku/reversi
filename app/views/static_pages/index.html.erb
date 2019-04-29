@@ -58,7 +58,15 @@
   <div id="modal-frame" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 </div>
 
-
+<script type="text/javascript">
+  $.ajax({
+    type: 'GET',
+    url: 'ad_request',
+    success: function(response){
+      $('.top-page').after(response);
+    }
+  });
+</script>
 <% unless user_signed_in? %>
   <script type="text/javascript">
     $(function(){

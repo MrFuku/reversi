@@ -16,5 +16,6 @@ Rails.application.routes.draw do
   post 'games/edit/:id', to: 'games#edit'
   post 'chats/create'
   get 'about', to: 'static_pages#about'
+  get 'ad_request', to: 'static_pages#ad_request'
   root to: 'static_pages#index'
 end
