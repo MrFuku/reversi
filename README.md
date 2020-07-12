@@ -1,7 +1,7 @@
 # ネットでオセロ
 [サイトURL](https://fuku-no-othello.herokuapp.com)
 
-[デモ動画](https://youtu.be/E1hvZuW9m7U)
+[![](https://img.youtube.com/vi/ur-nL4gk7Qk/0.jpg)](https://www.youtube.com/watch?v=ur-nL4gk7Qk)
 
 ## 制作期間
 - 3週間
